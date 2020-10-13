@@ -7,16 +7,16 @@ namespace MelonTestAutomation.Pages
     public class ProductsPage : BasePage
     {
         
-        public ProductsPage(IWebDriver driver) : base(driver) { }       
+        public ProductsPage(IWebDriver driver) : base(driver) { }
 
-        public IReadOnlyList<IWebElement> AllCategoriesPageCategoryNameList => Wait.Until(d => d.FindElements(By.XPath("//h3[@data-qa='allCategoriesPageCategoryName']//a"))).ToList();
+        public IReadOnlyList<IWebElement> AllCategoriesPageCategoryNameList => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.VisibilityOfAllElementsLocatedBy(By.ClassName("cat-categories__headingLink"))).ToList();
 
-        public IReadOnlyList<IWebElement> CategoryProductList => Wait.Until(d => d.FindElements(By.XPath("//a[@data-qa='searchResultPageProductLink']"))).ToList();
+        public IReadOnlyList<IWebElement> CategoryProductList => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.VisibilityOfAllElementsLocatedBy(By.XPath("//a[@data-qa='searchResultPageProductLink']"))).ToList();
 
-        public IWebElement AddProductToCartButton => Wait.Until(d => d.FindElement(By.XPath("//button[@data-qa='productDetailspageSideBoxBtnsAddToCart']")));
+        public IWebElement AddProductToCartButton => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.CssSelector("button[data-qa='productDetailspageSideBoxBtnsAddToCart']")));
 
-        public IWebElement ProductAmount => Wait.Until(d => d.FindElement(By.XPath("//div[contains(@class, 'pdp-productDetails__price')]")));
+        public IWebElement ProductAmount => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.ClassName("pdp-productDetails__price")));
 
-        public IWebElement GoToCartButton => Wait.Until(d => d.FindElement(By.XPath("//button[@data-qa='productDetailspageSideBoxBtnsGoToCart']")));
+        public IWebElement GoToCartButton => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.CssSelector("button[data-qa='productDetailspageSideBoxBtnsGoToCart']")));
     }
 }

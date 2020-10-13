@@ -1,25 +1,21 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\katri\\source\\repos\\MelonTestAutomation\\MelonTestAutomation\\MelonTestAutomation.csproj": {}
+    "C:\\Users\\kgrigorova\\Source\\Repos\\MelonAutomationTask\\MelonTestAutomation\\MelonTestAutomation.csproj": {}
   },
   "projects": {
-    "C:\\Users\\katri\\source\\repos\\MelonTestAutomation\\MelonTestAutomation\\MelonTestAutomation.csproj": {
+    "C:\\Users\\kgrigorova\\Source\\Repos\\MelonAutomationTask\\MelonTestAutomation\\MelonTestAutomation.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\katri\\source\\repos\\MelonTestAutomation\\MelonTestAutomation\\MelonTestAutomation.csproj",
+        "projectUniqueName": "C:\\Users\\kgrigorova\\Source\\Repos\\MelonAutomationTask\\MelonTestAutomation\\MelonTestAutomation.csproj",
         "projectName": "MelonTestAutomation",
-        "projectPath": "C:\\Users\\katri\\source\\repos\\MelonTestAutomation\\MelonTestAutomation\\MelonTestAutomation.csproj",
-        "packagesPath": "C:\\Users\\katri\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\katri\\source\\repos\\MelonTestAutomation\\MelonTestAutomation\\obj\\",
+        "projectPath": "C:\\Users\\kgrigorova\\Source\\Repos\\MelonAutomationTask\\MelonTestAutomation\\MelonTestAutomation.csproj",
+        "packagesPath": "C:\\Users\\kgrigorova\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\kgrigorova\\Source\\Repos\\MelonAutomationTask\\MelonTestAutomation\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-          "C:\\Users\\katri\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\kgrigorova\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -42,6 +38,14 @@
       "frameworks": {
         "netcoreapp3.1": {
           "dependencies": {
+            "DotNetSeleniumExtras.WaitHelpers": {
+              "target": "Package",
+              "version": "[3.11.0, )"
+            },
+            "Microsoft.Edge.SeleniumTools": {
+              "target": "Package",
+              "version": "[3.141.2, )"
+            },
             "Microsoft.NET.Test.Sdk": {
               "target": "Package",
               "version": "[16.7.1, )"
@@ -61,6 +65,14 @@
             "Selenium.WebDriver.ChromeDriver": {
               "target": "Package",
               "version": "[85.0.4183.8700, )"
+            },
+            "Selenium.WebDriver.GeckoDriver": {
+              "target": "Package",
+              "version": "[0.27.0, )"
+            },
+            "Selenium.WebDriver.MSEdgeDriver": {
+              "target": "Package",
+              "version": "[85.0.564.41, )"
             },
             "System.Configuration.ConfigurationManager": {
               "target": "Package",
@@ -82,7 +94,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
         }
       }
     }
