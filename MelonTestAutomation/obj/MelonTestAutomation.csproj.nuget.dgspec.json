@@ -74,6 +74,14 @@
               "target": "Package",
               "version": "[85.0.564.41, )"
             },
+            "SpecFlow": {
+              "target": "Package",
+              "version": "[3.4.14, )"
+            },
+            "SpecFlow.NUnit": {
+              "target": "Package",
+              "version": "[3.4.14, )"
+            },
             "System.Configuration.ConfigurationManager": {
               "target": "Package",
               "version": "[4.7.0, )"

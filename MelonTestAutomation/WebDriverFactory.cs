@@ -38,7 +38,7 @@ namespace MelonTestAutomation
 
         private static IWebDriver EdgeWebDriver()
         {
-            var options = new EdgeOptions();
+            EdgeOptions options = new EdgeOptions();
             options.UseChromium = true;
 
             IWebDriver driver = new EdgeDriver(options);

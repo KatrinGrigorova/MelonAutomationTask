@@ -53,7 +53,7 @@ namespace MelonTestAutomation
         public void When_SearchIsPerformed_Then_PaginationIsAvailableAndCorrectPageIsLoaded()
         {
             //Act
-            var isPaginationDisplayed = searchPage.Pagination.Displayed;
+            bool isPaginationDisplayed = searchPage.Pagination.Displayed;
 
             selectedPage = searchPage.SelectedPage.Text;
 

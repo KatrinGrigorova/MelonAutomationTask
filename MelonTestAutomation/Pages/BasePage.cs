@@ -17,7 +17,7 @@ namespace MelonTestAutomation.Pages
 
         public IWebDriver Driver => _driver;
 
-        public WebDriverWait Wait => new WebDriverWait(Driver, TimeSpan.FromSeconds(80));
+        public WebDriverWait Wait => new WebDriverWait(Driver, TimeSpan.FromSeconds(30));
 
         public void ScrollToElement(IWebElement element)
         {

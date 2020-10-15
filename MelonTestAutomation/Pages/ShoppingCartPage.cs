@@ -13,5 +13,10 @@ namespace MelonTestAutomation.Pages
         public IWebElement ShoppingCartTotalAmount => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.CssSelector(".ch-sideBox__lineValue--total")));
 
         public IReadOnlyList<IWebElement> IncreaseItemQuantityButton => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.VisibilityOfAllElementsLocatedBy(By.XPath("//div[@data-qa='shoppingCartViewCont']//li//button[@data-qa='cartPageItemQuantity__increase']"))).ToList();
+
+        public bool ShoppingCartItemQuantity(string quantity)
+        {
+            return Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.TextToBePresentInElementLocated(By.XPath("//span[@data-qa='cartPopupItemsQty']"), quantity));
+        }
     }
 }
