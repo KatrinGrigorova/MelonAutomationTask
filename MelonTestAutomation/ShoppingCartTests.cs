@@ -17,7 +17,6 @@ namespace MelonTestAutomation
         private HomePage homePage;
         private ProductsPage productsPage;
         private ShoppingCartPage shoppingCartPage;
-        private BasePage basePage;
 
         public ShoppingCartTests(BrowserType browser)
             : base()
@@ -48,7 +47,6 @@ namespace MelonTestAutomation
             shoppingCartPage = new ShoppingCartPage(driver);
 
             Random random = new Random();
-            List<IWebElement> randomProductList = new List<IWebElement>();
 
             int shoppingCartQuantity = 0;
 
@@ -57,7 +55,7 @@ namespace MelonTestAutomation
             homePage.AllCategories.Click();
             homePage.CookieButton.Click();
 
-            //Open some random catgory
+            //Open a random catgory
             int randomCategory = random.Next(productsPage.AllCategoriesPageCategoryNameList.Count);
             IWebElement category = productsPage.AllCategoriesPageCategoryNameList[randomCategory];
             homePage.ScrollToElement(category);
@@ -147,7 +145,7 @@ namespace MelonTestAutomation
 
             homePage.CookieButton.Click();
 
-            //Open some random category
+            //Open a random category
             var randomCategory = random.Next(productsPage.AllCategoriesPageCategoryNameList.Count);
             var category = productsPage.AllCategoriesPageCategoryNameList[randomCategory];
             homePage.ScrollToElement(category);

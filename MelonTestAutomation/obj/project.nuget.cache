@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "p1PJjl1YQkbApY1OzOqkHaSC24AoYDdQFv3wKLye8LOf7HzVKZAzar5vkyTOnBRrsIrOTbGccSfz8VkWtAZ92A==",
+  "dgSpecHash": "GuA4l98Qg5TZONp38mtIHwfOJWNRN5vzg5rWh8KeTUiJ1rUWEuQk1NB5VPG41/LGwviv20DX2H5DOjjmM0ujaA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\kgrigorova\\Source\\Repos\\MelonAutomationTask\\MelonTestAutomation\\MelonTestAutomation.csproj",
+  "projectFilePath": "C:\\Users\\kgrigorova\\source\\repos\\MelonAutomationTask\\MelonTestAutomation\\MelonTestAutomation.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\kgrigorova\\.nuget\\packages\\bodi\\1.4.1\\bodi.1.4.1.nupkg.sha512",
     "C:\\Users\\kgrigorova\\.nuget\\packages\\cucumber.messages\\6.0.1\\cucumber.messages.6.0.1.nupkg.sha512",

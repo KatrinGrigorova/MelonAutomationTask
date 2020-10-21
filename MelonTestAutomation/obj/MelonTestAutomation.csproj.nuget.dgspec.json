@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\kgrigorova\\Source\\Repos\\MelonAutomationTask\\MelonTestAutomation\\MelonTestAutomation.csproj": {}
+    "C:\\Users\\kgrigorova\\source\\repos\\MelonAutomationTask\\MelonTestAutomation\\MelonTestAutomation.csproj": {}
   },
   "projects": {
-    "C:\\Users\\kgrigorova\\Source\\Repos\\MelonAutomationTask\\MelonTestAutomation\\MelonTestAutomation.csproj": {
+    "C:\\Users\\kgrigorova\\source\\repos\\MelonAutomationTask\\MelonTestAutomation\\MelonTestAutomation.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\kgrigorova\\Source\\Repos\\MelonAutomationTask\\MelonTestAutomation\\MelonTestAutomation.csproj",
+        "projectUniqueName": "C:\\Users\\kgrigorova\\source\\repos\\MelonAutomationTask\\MelonTestAutomation\\MelonTestAutomation.csproj",
         "projectName": "MelonTestAutomation",
-        "projectPath": "C:\\Users\\kgrigorova\\Source\\Repos\\MelonAutomationTask\\MelonTestAutomation\\MelonTestAutomation.csproj",
+        "projectPath": "C:\\Users\\kgrigorova\\source\\repos\\MelonAutomationTask\\MelonTestAutomation\\MelonTestAutomation.csproj",
         "packagesPath": "C:\\Users\\kgrigorova\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\kgrigorova\\Source\\Repos\\MelonAutomationTask\\MelonTestAutomation\\obj\\",
+        "outputPath": "C:\\Users\\kgrigorova\\source\\repos\\MelonAutomationTask\\MelonTestAutomation\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\kgrigorova\\AppData\\Roaming\\NuGet\\NuGet.Config",

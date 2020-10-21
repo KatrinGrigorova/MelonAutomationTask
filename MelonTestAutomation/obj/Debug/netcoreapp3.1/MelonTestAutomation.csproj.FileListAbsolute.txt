@@ -219,7 +219,6 @@ C:\Users\kgrigorova\Source\Repos\MelonAutomationTask\MelonTestAutomation\bin\Deb
 C:\Users\kgrigorova\Source\Repos\MelonAutomationTask\MelonTestAutomation\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
 C:\Users\kgrigorova\Source\Repos\MelonAutomationTask\MelonTestAutomation\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\kgrigorova\Source\Repos\MelonAutomationTask\MelonTestAutomation\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
-C:\Users\kgrigorova\Source\Repos\MelonAutomationTask\MelonTestAutomation\obj\Debug\netcoreapp3.1\MelonTestAutomation.csprojAssemblyReference.cache
 C:\Users\kgrigorova\Source\Repos\MelonAutomationTask\MelonTestAutomation\obj\Debug\netcoreapp3.1\MelonTestAutomation.AssemblyInfoInputs.cache
 C:\Users\kgrigorova\Source\Repos\MelonAutomationTask\MelonTestAutomation\obj\Debug\netcoreapp3.1\MelonTestAutomation.AssemblyInfo.cs
 C:\Users\kgrigorova\Source\Repos\MelonAutomationTask\MelonTestAutomation\obj\Debug\netcoreapp3.1\MelonTestAutomation.csproj.CoreCompileInputs.cache
@@ -227,3 +226,4 @@ C:\Users\kgrigorova\Source\Repos\MelonAutomationTask\MelonTestAutomation\obj\Deb
 C:\Users\kgrigorova\Source\Repos\MelonAutomationTask\MelonTestAutomation\obj\Debug\netcoreapp3.1\MelonTestAutomation.dll
 C:\Users\kgrigorova\Source\Repos\MelonAutomationTask\MelonTestAutomation\obj\Debug\netcoreapp3.1\MelonTestAutomation.pdb
 C:\Users\kgrigorova\Source\Repos\MelonAutomationTask\MelonTestAutomation\obj\Debug\netcoreapp3.1\MelonTestAutomation.genruntimeconfig.cache
+C:\Users\kgrigorova\source\repos\MelonAutomationTask\MelonTestAutomation\obj\Debug\netcoreapp3.1\MelonTestAutomation.csprojAssemblyReference.cache
