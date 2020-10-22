@@ -5,8 +5,7 @@ using System.Linq;
 namespace MelonTestAutomation.Pages
 {
     public class ProductsPage : BasePage
-    {
-        
+    {        
         public ProductsPage(IWebDriver driver) : base(driver) { }
 
         public IReadOnlyList<IWebElement> AllCategoriesPageCategoryNameList => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.VisibilityOfAllElementsLocatedBy(By.XPath("//h3[@data-qa='allCategoriesPageCategoryName']//a"))).ToList();

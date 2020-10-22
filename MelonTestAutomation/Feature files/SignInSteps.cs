@@ -1,10 +1,10 @@
 ﻿using MelonTestAutomation.Pages;
 using NUnit.Framework;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 using System;
 using System.Linq;
 using TechTalk.SpecFlow;
-using static MelonTestAutomation.WebDriverFactory;
 
 namespace MelonTestAutomation.Feature_files
 {
@@ -12,7 +12,6 @@ namespace MelonTestAutomation.Feature_files
     public class SignInSteps
     {
         private IWebDriver driver;
-        private BrowserType browserType;
         private HomePage homePage;
         private MyworldSigninPage myworldSigninPage;
         private CashbackSigninPage cashbackSigninPage;
@@ -28,7 +27,7 @@ namespace MelonTestAutomation.Feature_files
         [Given(@"I am on the Home page")]
         public void GivenIAmOnTheHomePage()
         {
-            driver = WebDriver(browserType);
+            driver = new ChromeDriver();
             driver.Navigate().GoToUrl(url);
             driver.Manage().Window.Maximize();
 
@@ -69,13 +68,7 @@ namespace MelonTestAutomation.Feature_files
             {
                 myworldSigninPage.LoginInputPassword.SendKeys(password);
             }
-        }
-        
-        //[When(@"I press Sign in button")]
-        //public void WhenIPressSignInButton()
-        //{
-        //    myworldSigninPage.LoginSubmitButton.Click();
-        //}
+        }        
         
         [When(@"I press Cashback world button")]
         public void WhenIPressCashbackWorldButton()

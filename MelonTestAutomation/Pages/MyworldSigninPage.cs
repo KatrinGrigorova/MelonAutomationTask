@@ -3,8 +3,7 @@
 namespace MelonTestAutomation.Pages
 {
     public class MyworldSigninPage : BasePage
-    {
-        
+    {        
         public MyworldSigninPage(IWebDriver driver) : base(driver) { }
 
         public IWebElement LoginInputEmail => Driver.FindElement(By.Name("email"));

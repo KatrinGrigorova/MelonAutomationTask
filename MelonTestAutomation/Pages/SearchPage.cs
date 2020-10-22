@@ -6,7 +6,6 @@ namespace MelonTestAutomation.Pages
 {
     public class SearchPage : BasePage
     {
-        
         public SearchPage(IWebDriver driver) : base(driver) { }
 
         public IWebElement Pagination => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.CssSelector(".c-pagination")));

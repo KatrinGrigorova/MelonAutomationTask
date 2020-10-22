@@ -22,8 +22,6 @@ namespace MelonTestAutomation.Pages
 
         public IWebElement MyAccountLoggedIn => Driver.FindElement(By.XPath("//button[@data-qa='headerUserLoggedIn']"));
 
-        //public bool MyAccountCashbackIcon => Driver.FindElement(By.XPath("//button[@data-qa='headerUserLoggedIn']//i[contains(@class, 'icon-cashback')]")).Displayed;
-
         public IWebElement MyAccountCashbackIcon => Driver.FindElements(By.XPath("//button[@data-qa='headerUserLoggedIn']//i[contains(@class, 'icon-cashback')]")).FirstOrDefault();
     }
 }

@@ -1,11 +1,11 @@
 ﻿using MelonTestAutomation.Pages;
 using NUnit.Framework;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using TechTalk.SpecFlow;
-using static MelonTestAutomation.WebDriverFactory;
 
 namespace MelonTestAutomation.Feature_files
 {
@@ -13,7 +13,6 @@ namespace MelonTestAutomation.Feature_files
     public class ShoppingCartCheckValuesSteps
     {
         private IWebDriver driver;
-        private BrowserType browserType;
         private HomePage homePage;
         private ProductsPage productsPage;
         private ShoppingCartPage shoppingCartPage;
@@ -23,7 +22,7 @@ namespace MelonTestAutomation.Feature_files
         [Given(@"I am on the Home Page")]
         public void GivenIAmOnTheHomePage()
         {
-            driver = WebDriver(browserType);
+            driver = new ChromeDriver();
             driver.Navigate().GoToUrl("https://de.myworld.com/ ");
             driver.Manage().Window.Maximize();
 

@@ -6,7 +6,6 @@ using System;
 using System.Linq;
 using System.Web;
 using TechTalk.SpecFlow;
-using static MelonTestAutomation.WebDriverFactory;
 
 namespace MelonTestAutomation.Feature_files
 {
@@ -14,7 +13,6 @@ namespace MelonTestAutomation.Feature_files
     public class PaginationCheckSteps
     {
         private IWebDriver driver;
-        //private BrowserType browserType;
         private HomePage homePage;
         private SearchPage searchPage;
         private IWebElement page;

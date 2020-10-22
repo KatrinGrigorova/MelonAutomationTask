@@ -3,8 +3,7 @@
 namespace MelonTestAutomation.Pages
 {
     public class CashbackSigninPage : BasePage
-    {
-        
+    {      
         public CashbackSigninPage(IWebDriver driver) : base(driver) { }
 
         public IWebElement LoginInputEmail => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.Id("FormModel_Username")));
