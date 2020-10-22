@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using System.Linq;
 
 namespace MelonTestAutomation.Pages
 {
@@ -16,5 +17,13 @@ namespace MelonTestAutomation.Pages
         public IWebElement AllCategoriesDropDown => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath("//button[@data-qa='headerCategoriesOpenBtnDesktop']")));
 
         public IWebElement AllCategories => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath("//a[@data-qa='headerCategoriesTreeTitleLink']")));
+
+        public IWebElement MyAccountNotLoggedIn => Driver.FindElement(By.XPath("//a[@data-qa='headerUserNotLoggedIn']"));
+
+        public IWebElement MyAccountLoggedIn => Driver.FindElement(By.XPath("//button[@data-qa='headerUserLoggedIn']"));
+
+        //public bool MyAccountCashbackIcon => Driver.FindElement(By.XPath("//button[@data-qa='headerUserLoggedIn']//i[contains(@class, 'icon-cashback')]")).Displayed;
+
+        public IWebElement MyAccountCashbackIcon => Driver.FindElements(By.XPath("//button[@data-qa='headerUserLoggedIn']//i[contains(@class, 'icon-cashback')]")).FirstOrDefault();
     }
 }
