@@ -1,7 +1,9 @@
 ﻿using MelonTestAutomation.Pages;
+using Microsoft.Edge.SeleniumTools;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Firefox;
 using System;
 using System.Linq;
 using TechTalk.SpecFlow;
@@ -15,12 +17,6 @@ namespace MelonTestAutomation.Feature_files
         private HomePage homePage;
         private MyworldSigninPage myworldSigninPage;
         private CashbackSigninPage cashbackSigninPage;
-        private readonly ScenarioContext _scenarioContext;
-
-        public SignInSteps(ScenarioContext scenarioContext)
-        {
-            _scenarioContext = scenarioContext;
-        }
 
         string url = "https://de.myworld.com/";
 
@@ -43,52 +39,42 @@ namespace MelonTestAutomation.Feature_files
         {
             homePage.MyAccountNotLoggedIn.Click();
         }
-        
-        [When(@"I enter email address (.*)")]
-        public void WhenIEnterValidEmailAddress(string email)
+
+        [When(@"I fill (.*) and (.*) with (.*)")]
+        public void WhenIFillTheCredentialFields(string email, string password, string accountType)
         {
-            if (_scenarioContext.ScenarioInfo.Tags.Contains("cashback"))
+            switch (accountType)
             {
-                cashbackSigninPage.LoginInputEmail.SendKeys(email);
-            }
-            else
-            {
-                myworldSigninPage.LoginInputEmail.SendKeys(email);
+                case "myworld":
+                    myworldSigninPage.LoginInputEmail.SendKeys(email);
+                    myworldSigninPage.LoginInputPassword.SendKeys(password);
+                    break;
+                case "cashback":
+                    myworldSigninPage.LoginCashBackSubmitButton.Click();
+                    cashbackSigninPage.LoginInputEmail.SendKeys(email);
+                    cashbackSigninPage.LoginInputPassword.SendKeys(password);
+                    break;
+                default:
+                    break;
             }
         }
-        
-        [When("I enter passworld (.*)")]
-        public void WhenIEnterValidPassworld(string password)
+
+        [When(@"I press Login button in (.*) SignIn form")]
+        public void WhenIPressLoginButton(string accountType)
         {
-            if (_scenarioContext.ScenarioInfo.Tags.Contains("cashback"))       
+            switch (accountType)
             {
-                cashbackSigninPage.LoginInputPassword.SendKeys(password);
+                case "myworld":
+                    myworldSigninPage.LoginSubmitButton.Click();
+                    break;
+                case "cashback":
+                    cashbackSigninPage.LoginSubmitButton.Click();
+                    break;
+                default:
+                    break;
             }
-            else
-            {
-                myworldSigninPage.LoginInputPassword.SendKeys(password);
-            }
-        }        
-        
-        [When(@"I press Cashback world button")]
-        public void WhenIPressCashbackWorldButton()
-        {
-            myworldSigninPage.LoginCashBackSubmitButton.Click();
-        }
-        
-        [When(@"I press Login button")]
-        public void WhenIPressLoginButton()
-        {
-            if (_scenarioContext.ScenarioInfo.Tags.Contains("cashback"))
-            {
-                cashbackSigninPage.LoginSubmitButton.Click();
-            }
-            else
-            {
-                myworldSigninPage.LoginSubmitButton.Click();
-            }
-        }
-        
+        }       
+
         [Then(@"The Sign In page is loaded")]
         public void ThenTheSignInPageIsLoaded()
         {
@@ -99,12 +85,12 @@ namespace MelonTestAutomation.Feature_files
         }
 
         [Then("I am logged with my (.*) account")]
-        public void ThenIAmLoggedWithAccount(string account)
+        public void ThenIAmLoggedWithAccount(string accountType)
         {
             bool isLoggedIn;
             bool isCashBackIconDisplayed;
 
-            if (account == "myworld")
+            if (accountType == "myworld")
             {
                 isLoggedIn = homePage.MyAccountLoggedIn.Displayed;
                 isCashBackIconDisplayed = homePage.MyAccountCashbackIcon == null;
@@ -125,23 +111,36 @@ namespace MelonTestAutomation.Feature_files
                     Assert.IsTrue(isLoggedIn, "I am not logged in.");
                     Assert.IsFalse(isCashBackIconDisplayed, "I am not logged in with my cashback account.");
                 });
-            }            
-        }
-       
-        [Then(@"I am redirected to Cashback world sign in page")]
-        public void ThenIAmRedirectedToCashbackWorldSignInPage()
-        {
-            string cashbackSignInUrlTitle = "Cashback World | Cashback: Money back with every purchase";
-            string currentUrl = driver.Title;
+            }
 
-            Assert.AreEqual(cashbackSignInUrlTitle, currentUrl, "Wrong redirection");
-        }
-        
-        [Then(@"I am redirected back to myworld website")]
-        public void ThenIAmRedirectedBackToMyworldWebsite()
-        {
-            Assert.AreEqual(url, driver.Url, "Wrong redirection.");
-        }
+
+            switch (accountType)
+            {
+                case "myworld":
+                    isLoggedIn = homePage.MyAccountLoggedIn.Displayed;
+                    isCashBackIconDisplayed = homePage.MyAccountCashbackIcon == null;
+
+                    Assert.Multiple(() =>
+                    {
+                        Assert.IsTrue(isLoggedIn, "I am not logged in.");
+                        Assert.IsTrue(isCashBackIconDisplayed, "The cashback icon appears, but it shouldn't.");
+                    });
+                    break;
+                case "cashback":
+                    isLoggedIn = homePage.MyAccountLoggedIn.Displayed;
+                    isCashBackIconDisplayed = homePage.MyAccountCashbackIcon == null;
+
+                    Assert.Multiple(() =>
+                    {
+                        Assert.AreEqual(url, driver.Url, "I am not redirected back to myworld.");
+                        Assert.IsTrue(isLoggedIn, "I am not logged in.");
+                        Assert.IsFalse(isCashBackIconDisplayed, "I am not logged in with my cashback account.");
+                    });
+                    break;
+                default:
+                    break;
+            }
+        }               
        
         [AfterScenario("@signin")]
         public void DesposeWebDriver()
