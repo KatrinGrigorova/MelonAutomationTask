@@ -6,13 +6,13 @@ namespace MelonTestAutomation.Pages
     {        
         public MyworldSigninPage(IWebDriver driver) : base(driver) { }
 
-        public IWebElement LoginInputEmail => Driver.FindElement(By.Name("email"));
+        public IWebElement LoginInputEmail => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.Name("email")));
 
-        public IWebElement LoginInputPassword => Driver.FindElement(By.Name("password"));
+        public IWebElement LoginInputPassword => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.Name("password")));
 
-        public IWebElement LoginSubmitButton => Driver.FindElement(By.XPath("//button[@data-qa='loginBtnSubmit']"));
+        public IWebElement LoginSubmitButton => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath("//button[@data-qa='loginBtnSubmit']")));
 
-        public IWebElement LoginCashBackSubmitButton => Driver.FindElement(By.XPath("//a[@data-qa='loginCashbackBtnSubmit']"));
+        public IWebElement LoginCashBackSubmitButton => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath("//a[@data-qa='loginCashbackBtnSubmit']")));
         
     }
 }

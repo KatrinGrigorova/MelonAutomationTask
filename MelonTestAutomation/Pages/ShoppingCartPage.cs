@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using MelonTestAutomation.Drivers;
+using OpenQA.Selenium;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -20,5 +21,7 @@ namespace MelonTestAutomation.Pages
         }
 
         public IReadOnlyList<IWebElement> ShoppingCartProductsNames => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.VisibilityOfAllElementsLocatedBy(By.XPath("//a[contains(@data-qa, 'shoppingCartProductLinkDesktop')]"))).ToList();
+
+        public IReadOnlyList<IWebElement> RemoveItemFromTheCart => Driver.FindElements(By.XPath("//button[contains(@data-qa, 'shoppingCartViewItemRemoveBtn')]")).ToList();
     }
 }

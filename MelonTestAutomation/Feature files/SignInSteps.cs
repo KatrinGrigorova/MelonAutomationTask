@@ -1,4 +1,5 @@
-﻿using MelonTestAutomation.Pages;
+﻿using MelonTestAutomation.Drivers;
+using MelonTestAutomation.Pages;
 using Microsoft.Edge.SeleniumTools;
 using NUnit.Framework;
 using OpenQA.Selenium;
@@ -13,31 +14,40 @@ namespace MelonTestAutomation.Feature_files
     [Binding]
     public class SignInSteps
     {
-        private IWebDriver driver;
-        private HomePage homePage;
         private MyworldSigninPage myworldSigninPage;
         private CashbackSigninPage cashbackSigninPage;
 
         string url = "https://de.myworld.com/";
 
+        private WebDriverContext _context;
+        private readonly ScenarioContext _scenarioContext;
+
+        public SignInSteps(WebDriverContext context, ScenarioContext scenarioContext)
+        {
+            _context = context;
+            _scenarioContext = scenarioContext;
+        }
+
         [Given(@"I am on the Home page")]
         public void GivenIAmOnTheHomePage()
         {
-            driver = new ChromeDriver();
-            driver.Navigate().GoToUrl(url);
-            driver.Manage().Window.Maximize();
+            //string baseUrl = _configurationDriver.SeleniumBaseUrl;
+            //driver = _browserDriver.Current;
+            //_context.Driver = new ChromeDriver();
+            _context.Driver.Navigate().GoToUrl(url);
+            _context.Driver.Manage().Window.Maximize();
 
-            homePage = new HomePage(driver);
-            myworldSigninPage = new MyworldSigninPage(driver);
-            cashbackSigninPage = new CashbackSigninPage(driver);
+            //homePage = new HomePage(_driver.Driver);
+            myworldSigninPage = new MyworldSigninPage(_context.Driver);
+            cashbackSigninPage = new CashbackSigninPage(_context.Driver);
 
-            url = driver.Url;
+            url = _context.Driver.Url;
         }
-        
+
         [When(@"I press MyAccount")]
         public void WhenIPressMyAccount()
         {
-            homePage.MyAccountNotLoggedIn.Click();
+            _context.HomePage.MyAccountNotLoggedIn.Click();
         }
 
         [When(@"I fill (.*) and (.*) with (.*)")]
@@ -73,12 +83,12 @@ namespace MelonTestAutomation.Feature_files
                 default:
                     break;
             }
-        }       
+        }
 
         [Then(@"The Sign In page is loaded")]
         public void ThenTheSignInPageIsLoaded()
         {
-            Uri currentUrl = new Uri(driver.Url);
+            Uri currentUrl = new Uri(_context.Driver.Url);
             string urlDirectory = currentUrl.Segments.LastOrDefault();
 
             Assert.AreEqual("signin", urlDirectory, "Wrong page is loaded.");
@@ -92,8 +102,8 @@ namespace MelonTestAutomation.Feature_files
 
             if (accountType == "myworld")
             {
-                isLoggedIn = homePage.MyAccountLoggedIn.Displayed;
-                isCashBackIconDisplayed = homePage.MyAccountCashbackIcon == null;
+                isLoggedIn = _context.HomePage.MyAccountLoggedIn.Displayed;
+                isCashBackIconDisplayed = _context.HomePage.MyAccountCashbackIcon == null;
 
                 Assert.Multiple(() =>
                 {
@@ -103,8 +113,8 @@ namespace MelonTestAutomation.Feature_files
             }
             else
             {
-                isLoggedIn = homePage.MyAccountLoggedIn.Displayed;
-                isCashBackIconDisplayed = homePage.MyAccountCashbackIcon == null;
+                isLoggedIn = _context.HomePage.MyAccountLoggedIn.Displayed;
+                isCashBackIconDisplayed = _context.HomePage.MyAccountCashbackIcon == null;
 
                 Assert.Multiple(() =>
                 {
@@ -117,8 +127,8 @@ namespace MelonTestAutomation.Feature_files
             switch (accountType)
             {
                 case "myworld":
-                    isLoggedIn = homePage.MyAccountLoggedIn.Displayed;
-                    isCashBackIconDisplayed = homePage.MyAccountCashbackIcon == null;
+                    isLoggedIn = _context.HomePage.MyAccountLoggedIn.Displayed;
+                    isCashBackIconDisplayed = _context.HomePage.MyAccountCashbackIcon == null;
 
                     Assert.Multiple(() =>
                     {
@@ -127,25 +137,63 @@ namespace MelonTestAutomation.Feature_files
                     });
                     break;
                 case "cashback":
-                    isLoggedIn = homePage.MyAccountLoggedIn.Displayed;
-                    isCashBackIconDisplayed = homePage.MyAccountCashbackIcon == null;
+                    isLoggedIn = _context.HomePage.MyAccountLoggedIn.Displayed;
+                    isCashBackIconDisplayed = _context.HomePage.MyAccountCashbackIcon == null;
 
-                    Assert.Multiple(() =>
+                    if (_scenarioContext.ScenarioInfo.Tags.Contains("shoppingCart"))
                     {
-                        Assert.AreEqual(url, driver.Url, "I am not redirected back to myworld.");
-                        Assert.IsTrue(isLoggedIn, "I am not logged in.");
-                        Assert.IsFalse(isCashBackIconDisplayed, "I am not logged in with my cashback account.");
-                    });
+                        Assert.Multiple(() =>
+                        {
+                            Assert.AreEqual(url, _context.Driver.Url, "I am not redirected back to myworld.");
+                            Assert.IsTrue(isLoggedIn, "I am not logged in.");
+                            Assert.IsFalse(isCashBackIconDisplayed, "I am not logged in with my cashback account.");
+                        });
+                    }
+                    else
+                    {
+                        Assert.Multiple(() =>
+                        {
+                            Assert.IsTrue(isLoggedIn, "I am not logged in.");
+                            Assert.IsFalse(isCashBackIconDisplayed, "I am not logged in with my cashback account.");
+                        });
+                    }
+
                     break;
                 default:
                     break;
             }
-        }               
-       
-        [AfterScenario("@signin")]
+        }
+
+        [Then(@"I am on the Shopping cart page")]
+        public void ThenIAmOnTheShoppingCartPage()
+        {
+            Uri currentUrl = new Uri(_context.Driver.Url);
+            string urlDirectory = currentUrl.Segments.LastOrDefault();
+
+            Assert.AreEqual("cart", urlDirectory, "Wrong page is loaded.");
+        }
+
+
+        [AfterScenario("@signinFeature")]
         public void DesposeWebDriver()
         {
-            driver.Dispose();
+            //Delete all products in the shopping cart
+            if (_scenarioContext.ScenarioInfo.Tags.Contains("signinThroughShoppingCart"))
+            {
+                var removeItemsList = _context.ShoppingCartPage.RemoveItemFromTheCart.ToList();
+                var cartProductsNumber = _context.ShoppingCartPage.ShoppingCartProductsNames.Count();
+
+                if (cartProductsNumber != 1)
+                {
+                    foreach (var item in removeItemsList)
+                    {
+                        item.Click();
+                        _context.ShoppingCartPage.ShoppingCartItemQuantity((cartProductsNumber - 1).ToString());
+                    }
+                }
+            }
+            
+            _context.Driver.Dispose();
         }
     }
 }

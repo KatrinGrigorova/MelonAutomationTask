@@ -78,12 +78,12 @@ namespace MelonTestAutomation.FeatureFiles
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Add three random products to the shopping cart and check the values")]
-        public virtual void AddThreeRandomProductsToTheShoppingCartAndCheckTheValues()
+        [NUnit.Framework.DescriptionAttribute("Add n random products to the shopping cart and check the values")]
+        public virtual void AddNRandomProductsToTheShoppingCartAndCheckTheValues()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Add three random products to the shopping cart and check the values", null, tagsOfScenario, argumentsOfScenario);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Add n random products to the shopping cart and check the values", null, tagsOfScenario, argumentsOfScenario);
 #line 7
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -126,7 +126,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Then("The correct category is loaded", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
 #line 15
- testRunner.When("I add three random available products to the shopping cart", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I add 3 random available products to the shopping cart", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 16
  testRunner.And("I go to the shopping cart", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");

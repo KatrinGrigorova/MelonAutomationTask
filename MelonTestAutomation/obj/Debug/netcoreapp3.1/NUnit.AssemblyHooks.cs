@@ -5,7 +5,7 @@ using System.Diagnostics;
 using global::NUnit.Framework;
 using global::TechTalk.SpecFlow;
 
-[GeneratedCode("SpecFlow", "3.4.14")]
+[GeneratedCode("SpecFlow", "3.4.31")]
 [SetUpFixture]
 public class MelonTestAutomation_NUnitAssemblyHooks
 {
