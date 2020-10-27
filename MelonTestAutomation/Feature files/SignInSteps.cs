@@ -179,12 +179,11 @@ namespace MelonTestAutomation.Feature_files
                 var removeItemsList = _context.ShoppingCartPage.RemoveItemFromTheCart.ToList();
                 var cartProductsNumber = _context.ShoppingCartPage.ShoppingCartProductsNames.Count();
 
-                if (cartProductsNumber != 1)
+                if (cartProductsNumber >= 1)
                 {
                     foreach (var item in removeItemsList)
                     {
                         item.Click();
-                        _context.ShoppingCartPage.ShoppingCartItemQuantity((cartProductsNumber - 1).ToString());
                     }
                 }
             }
