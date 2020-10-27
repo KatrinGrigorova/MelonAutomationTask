@@ -212,6 +212,9 @@ this.FeatureBackground();
 #line 33
  testRunner.When("I press MyAccount", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
+#line 34
+ testRunner.Then("The Sign In page is loaded", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
 #line 35
  testRunner.When(string.Format("I fill {0} and {1} with {2}", email, password, account_Type), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden

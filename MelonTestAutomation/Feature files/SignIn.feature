@@ -31,7 +31,7 @@ Scenario Outline: Successful login starts and ends on the same page
 	And I go to the shopping cart
 	Then The correct products are added to the shopping cart
 	When I press MyAccount
-	#Then The Sign In page is loaded
+	Then The Sign In page is loaded
 	When I fill <email> and <password> with <account_type>
 	And I press Login button in <account_type> SignIn form
 	Then I am logged with my <account_type> account

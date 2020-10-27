@@ -31,13 +31,9 @@ namespace MelonTestAutomation.Feature_files
         [Given(@"I am on the Home page")]
         public void GivenIAmOnTheHomePage()
         {
-            //string baseUrl = _configurationDriver.SeleniumBaseUrl;
-            //driver = _browserDriver.Current;
-            //_context.Driver = new ChromeDriver();
             _context.Driver.Navigate().GoToUrl(url);
             _context.Driver.Manage().Window.Maximize();
 
-            //homePage = new HomePage(_driver.Driver);
             myworldSigninPage = new MyworldSigninPage(_context.Driver);
             cashbackSigninPage = new CashbackSigninPage(_context.Driver);
 
@@ -192,7 +188,7 @@ namespace MelonTestAutomation.Feature_files
                     }
                 }
             }
-            
+
             _context.Driver.Dispose();
         }
     }

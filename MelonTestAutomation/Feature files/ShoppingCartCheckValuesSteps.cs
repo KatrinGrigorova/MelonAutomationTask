@@ -13,7 +13,6 @@ namespace MelonTestAutomation.Feature_files
     [Binding]
     public class ShoppingCartCheckValuesSteps
     {
-        //private IWebDriver driver;
         private string categoryLink;
         private List<string> productList;
 
@@ -27,13 +26,8 @@ namespace MelonTestAutomation.Feature_files
         [Given(@"I am on the Home Page")]
         public void GivenIAmOnTheHomePage()
         {
-            //_driver = new ChromeDriver();
             _context.Driver.Navigate().GoToUrl("https://de.myworld.com/ ");
             _context.Driver.Manage().Window.Maximize();
-
-            //homePage = new HomePage(_driver.Driver);
-            //productsPage = new ProductsPage(_driver.Driver);
-            //shoppingCartPage = new ShoppingCartPage(_driver.Driver);
         }
 
         [Given(@"I press Accept cookies")]
