@@ -15,7 +15,7 @@ namespace MelonTestAutomation.Pages
 
         public IReadOnlyList<IWebElement> IncreaseItemQuantityButton => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.VisibilityOfAllElementsLocatedBy(By.XPath("//button[@data-qa='cartPageItemQuantity__increase']"))).ToList();
 
-        public bool ShoppingCartItemQuantity(string quantity)
+        public bool ShoppingCartItemQuantity(string quantity) 
         {
             return Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.TextToBePresentInElementLocated(By.XPath("//span[@data-qa='cartPopupItemsQty']"), quantity));
         }

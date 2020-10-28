@@ -8,15 +8,17 @@ using System.Collections.Generic;
 using System.Linq;
 using TechTalk.SpecFlow;
 
-namespace MelonTestAutomation.Feature_files
+namespace MelonTestAutomation.StepDefinitions
 {
     [Binding]
     public class ShoppingCartCheckValuesSteps
     {
         private string categoryLink;
         private List<string> productList;
-
         private readonly WebDriverContext _context;
+
+        public string CategoryLink => categoryLink;
+        public List<string> ProductList => productList;
 
         public ShoppingCartCheckValuesSteps(WebDriverContext context)
         {
@@ -26,7 +28,7 @@ namespace MelonTestAutomation.Feature_files
         [Given(@"I am on the Home Page")]
         public void GivenIAmOnTheHomePage()
         {
-            _context.Driver.Navigate().GoToUrl("https://de.myworld.com/ ");
+            _context.Driver.Navigate().GoToUrl("https://de.myworld.com/");
             _context.Driver.Manage().Window.Maximize();
         }
 
@@ -103,19 +105,6 @@ namespace MelonTestAutomation.Feature_files
         public void WhenIGoToTheShoppingCart()
         {
             _context.ProductsPage.GoToCartButton.Click();
-        }
-
-        [When(@"I add one random available product to the shopping cart")]
-        public void WhenIAddRandomAvailableProductToTheShoppingCart()
-        {
-            int randomProduct = Enumerable.Range(1, _context.ProductsPage.CategoryProductList.ToList().Count).OrderBy(o => (new Random()).Next()).FirstOrDefault();
-
-            IWebElement item = _context.ProductsPage.CategoryProductList[randomProduct - 1];
-
-            _context.HomePage.ScrollToElement(item);
-            item.Click();
-
-            _context.ProductsPage.AddProductToCartButton.Click();
         }
 
         [When(@"I increase the product quantity")]

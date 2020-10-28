@@ -77,28 +77,20 @@ namespace MelonTestAutomation.FeatureFiles
             testRunner.CollectScenarioErrors();
         }
         
-        public virtual void FeatureBackground()
-        {
-#line 7
-#line hidden
-#line 8
- testRunner.Given("I am on the Home page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-        }
-        
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Sign in with valid account")]
-        [NUnit.Framework.TestCaseAttribute("waldenschmid@abv.bg", "walden666", "myworld", null)]
-        [NUnit.Framework.TestCaseAttribute("anabern@abv.bg", "anaCa$hback", "cashback", null)]
-        public virtual void SignInWithValidAccount(string email, string password, string account_Type, string[] exampleTags)
+        [NUnit.Framework.TestCaseAttribute("waldenschmid@abv.bg", "walden666", "myworld", "homePage", null)]
+        [NUnit.Framework.TestCaseAttribute("anabern@abv.bg", "anaCa$hback", "cashback", "homePage", null)]
+        public virtual void SignInWithValidAccount(string email, string password, string account_Type, string page, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("email", email);
             argumentsOfScenario.Add("password", password);
             argumentsOfScenario.Add("account_type", account_Type);
+            argumentsOfScenario.Add("page", page);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Sign in with valid account", null, tagsOfScenario, argumentsOfScenario);
-#line 10
+#line 7
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -118,22 +110,22 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 7
-this.FeatureBackground();
+#line 8
+ testRunner.Given(string.Format("I am on page {0}", page), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 11
+#line 9
  testRunner.When("I press MyAccount", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 12
+#line 10
  testRunner.Then("The Sign In page is loaded", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 13
+#line 11
  testRunner.When(string.Format("I fill {0} and {1} with {2}", email, password, account_Type), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 14
+#line 12
  testRunner.And(string.Format("I press Login button in {0} SignIn form", account_Type), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 15
+#line 13
  testRunner.Then(string.Format("I am logged with my {0} account", account_Type), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -142,13 +134,16 @@ this.FeatureBackground();
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Successful login starts and ends on the same page")]
-        [NUnit.Framework.CategoryAttribute("signinThroughShoppingCart")]
-        [NUnit.Framework.TestCaseAttribute("waldenschmid@abv.bg", "walden666", "myworld", null)]
-        [NUnit.Framework.TestCaseAttribute("anabern@abv.bg", "anaCa$hback", "cashback", null)]
-        public virtual void SuccessfulLoginStartsAndEndsOnTheSamePage(string email, string password, string account_Type, string[] exampleTags)
+        [NUnit.Framework.CategoryAttribute("signinFromAnyPage")]
+        [NUnit.Framework.TestCaseAttribute("waldenschmid@abv.bg", "walden666", "myworld", "homePage", null)]
+        [NUnit.Framework.TestCaseAttribute("anabern@abv.bg", "anaCa$hback", "cashback", "categoriesPage", null)]
+        [NUnit.Framework.TestCaseAttribute("waldenschmid@abv.bg", "walden666", "myworld", "randomCategoryPage", null)]
+        [NUnit.Framework.TestCaseAttribute("anabern@abv.bg", "anaCa$hback", "cashback", "shoppingCartPage", null)]
+        [NUnit.Framework.TestCaseAttribute("waldenschmid@abv.bg", "walden666", "myworld", "randomProductDetailsPage", null)]
+        public virtual void SuccessfulLoginStartsAndEndsOnTheSamePage(string email, string password, string account_Type, string page, string[] exampleTags)
         {
             string[] @__tags = new string[] {
-                    "signinThroughShoppingCart"};
+                    "signinFromAnyPage"};
             if ((exampleTags != null))
             {
                 @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
@@ -158,8 +153,9 @@ this.FeatureBackground();
             argumentsOfScenario.Add("email", email);
             argumentsOfScenario.Add("password", password);
             argumentsOfScenario.Add("account_type", account_Type);
+            argumentsOfScenario.Add("page", page);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Successful login starts and ends on the same page", null, tagsOfScenario, argumentsOfScenario);
-#line 23
+#line 21
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -179,56 +175,26 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 7
-this.FeatureBackground();
+#line 22
+ testRunner.Given(string.Format("I am on page {0}", page), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 24
- testRunner.Given("I press Accept cookies", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-#line 25
- testRunner.When("I press All categories dropdown menu", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 26
- testRunner.And("I press All categories link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 27
- testRunner.Then("The page with all categories is loaded", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-#line 28
- testRunner.When("I open random category", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 29
- testRunner.Then("The correct category is loaded", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-#line 30
- testRunner.When("I add 1 random available products to the shopping cart", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 31
- testRunner.And("I go to the shopping cart", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 32
- testRunner.Then("The correct products are added to the shopping cart", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-#line 33
+#line 23
  testRunner.When("I press MyAccount", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 34
+#line 24
  testRunner.Then("The Sign In page is loaded", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 35
+#line 25
  testRunner.When(string.Format("I fill {0} and {1} with {2}", email, password, account_Type), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 36
+#line 26
  testRunner.And(string.Format("I press Login button in {0} SignIn form", account_Type), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 37
+#line 27
  testRunner.Then(string.Format("I am logged with my {0} account", account_Type), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 38
- testRunner.And("I am on the Shopping cart page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 39
- testRunner.And("The correct products are added to the shopping cart", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 28
+ testRunner.And(string.Format("I am on page {0}", page), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }
             this.ScenarioCleanup();

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Web;
 using TechTalk.SpecFlow;
 
-namespace MelonTestAutomation.Feature_files
+namespace MelonTestAutomation.StepDefinitions
 {
     [Binding]
     public class PaginationCheckSteps

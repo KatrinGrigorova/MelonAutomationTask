@@ -1,43 +1,78 @@
 ﻿using MelonTestAutomation.Drivers;
 using MelonTestAutomation.Pages;
-using Microsoft.Edge.SeleniumTools;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Firefox;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using TechTalk.SpecFlow;
 
-namespace MelonTestAutomation.Feature_files
+namespace MelonTestAutomation.StepDefinitions
 {
     [Binding]
     public class SignInSteps
     {
         private MyworldSigninPage myworldSigninPage;
         private CashbackSigninPage cashbackSigninPage;
-
-        string url = "https://de.myworld.com/";
-
+        private ShoppingCartCheckValuesSteps getCategoriesSteps;
         private WebDriverContext _context;
         private readonly ScenarioContext _scenarioContext;
 
+        string url = "https://de.myworld.com/";
+       
         public SignInSteps(WebDriverContext context, ScenarioContext scenarioContext)
         {
             _context = context;
             _scenarioContext = scenarioContext;
         }
 
-        [Given(@"I am on the Home page")]
-        public void GivenIAmOnTheHomePage()
+        [BeforeScenario("@signinFeature")]
+        public void BeforeScenario()
         {
             _context.Driver.Navigate().GoToUrl(url);
             _context.Driver.Manage().Window.Maximize();
+            _context.HomePage.CookieButton.Click();
 
             myworldSigninPage = new MyworldSigninPage(_context.Driver);
             cashbackSigninPage = new CashbackSigninPage(_context.Driver);
+            getCategoriesSteps = new ShoppingCartCheckValuesSteps(_context) { };
+        }
 
-            url = _context.Driver.Url;
+        [Given(@"I am on page (.*)")]
+        public void GivenIAmOnPage(string page)
+        {
+            switch (page)
+            {
+                case "homePage":
+                    url = _context.Driver.Url;
+                    break;
+                case "categoriesPage":
+                    getCategoriesSteps.WhenIPressAllCategoriesDropdownMenu();
+                    getCategoriesSteps.WhenIPressAllCategoriesLink();
+
+                    url = _context.Driver.Url;
+                    break;
+                case "randomCategoryPage":
+                    getCategoriesSteps.WhenIPressAllCategoriesDropdownMenu();
+                    getCategoriesSteps.WhenIPressAllCategoriesLink();
+                    getCategoriesSteps.WhenIOpenRandomCategory();
+                    break;
+                case "shoppingCartPage":
+                    getCategoriesSteps.WhenIPressAllCategoriesDropdownMenu();
+                    getCategoriesSteps.WhenIPressAllCategoriesLink();
+                    getCategoriesSteps.WhenIOpenRandomCategory();
+                    getCategoriesSteps.WhenIAddRandomAvailableProductsToTheShoppingCart(1);
+                    getCategoriesSteps.WhenIGoToTheShoppingCart();
+                    break;
+                case "randomProductDetailsPage":
+                   
+                    OpenRandomProductDetails();
+
+                    url = _context.Driver.Url;
+                    break;
+                default:
+                    break;
+            }
         }
 
         [When(@"I press MyAccount")]
@@ -160,35 +195,95 @@ namespace MelonTestAutomation.Feature_files
             }
         }
 
-        [Then(@"I am on the Shopping cart page")]
-        public void ThenIAmOnTheShoppingCartPage()
+        [Then(@"I am on page (.*)")]
+        public void ThenIAmOnPage(string page)
         {
-            Uri currentUrl = new Uri(_context.Driver.Url);
-            string urlDirectory = currentUrl.Segments.LastOrDefault();
+            Uri currentUrl;
+            string currentUrlString;
+            string urlDirectory;
 
-            Assert.AreEqual("cart", urlDirectory, "Wrong page is loaded.");
+            switch (page)
+            {
+                case "homePage":
+                    currentUrl = new Uri(_context.Driver.Url);
+                    currentUrlString = currentUrl.ToString();
+
+                    Assert.AreEqual(url, currentUrlString, "Wrong page is loaded.");
+                    break;
+                case "categoriesPage":
+                    currentUrl = new Uri(_context.Driver.Url);
+                    urlDirectory = currentUrl.Segments.LastOrDefault();
+
+                    Assert.AreEqual("categories", urlDirectory, "Wrong page is loaded.");
+                    break;
+                case "randomCategoryPage":
+                    currentUrlString = _context.Driver.Url;
+
+                    Assert.AreEqual(getCategoriesSteps.CategoryLink, currentUrlString, "Wrong category is loaded.");
+                    break;
+                case "shoppingCartPage":
+                    List<string> shoppingCartProductNames = _context.ShoppingCartPage.ShoppingCartProductsNames.Select(p => p.Text).ToList();
+
+                    currentUrl = new Uri(_context.Driver.Url);
+                    urlDirectory = currentUrl.Segments.LastOrDefault();
+
+                    DeleteProductsFromShoppingCart();
+
+                    Assert.Multiple(() =>
+                    {
+                        Assert.AreEqual("cart", urlDirectory, "Wrong page is loaded.");
+                        CollectionAssert.AreEquivalent(getCategoriesSteps.ProductList, shoppingCartProductNames, "The products in the shopping cart don't match the added ones.");
+                    });
+                    break;
+                case "randomProductDetailsPage":
+                    currentUrl = new Uri(_context.Driver.Url);
+                    currentUrlString = currentUrl.ToString();
+
+                    Assert.AreEqual(url, currentUrlString, "Wrong page is loaded.");
+                    break;
+                default:
+                    break;
+            }
         }
 
 
         [AfterScenario("@signinFeature")]
         public void DesposeWebDriver()
         {
-            //Delete all products in the shopping cart
-            if (_scenarioContext.ScenarioInfo.Tags.Contains("signinThroughShoppingCart"))
-            {
-                var removeItemsList = _context.ShoppingCartPage.RemoveItemFromTheCart.ToList();
-                var cartProductsNumber = _context.ShoppingCartPage.ShoppingCartProductsNames.Count();
-
-                if (cartProductsNumber >= 1)
-                {
-                    foreach (var item in removeItemsList)
-                    {
-                        item.Click();
-                    }
-                }
-            }
-
             _context.Driver.Dispose();
         }
+
+
+
+        #region Internal methods
+        public void DeleteProductsFromShoppingCart()
+        {
+            var removeItemsList = _context.ShoppingCartPage.RemoveItemFromTheCart.ToList();
+
+            if (removeItemsList.Count() >= 1)
+            {
+                foreach (var item in removeItemsList)
+                {
+                    item.Click();
+                }
+            }
+        }
+
+        public void OpenRandomProductDetails()
+        {
+            getCategoriesSteps.WhenIPressAllCategoriesDropdownMenu();
+            getCategoriesSteps.WhenIPressAllCategoriesLink();
+            getCategoriesSteps.WhenIOpenRandomCategory();
+
+            int randomProduct = Enumerable.Range(1, _context.ProductsPage.CategoryProductList.ToList().Count).OrderBy(o => (new Random()).Next()).Take(1).FirstOrDefault();
+
+            IWebElement product = _context.ProductsPage.CategoryProductList[randomProduct - 1];
+
+            string productName = product.GetAttribute("text").Trim();
+
+            _context.HomePage.ScrollToElement(product);
+            product.Click();
+        }
+        #endregion
     }
 }
