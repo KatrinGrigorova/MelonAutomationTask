@@ -15,8 +15,8 @@ namespace MelonTestAutomation.Pages
 
         public IReadOnlyList<IWebElement> PageNumberList => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.VisibilityOfAllElementsLocatedBy(By.XPath("//nav[@data-qa='pagination']//a[@data-qa='paginationLink']"))).ToList();
 
-        public IWebElement NextPageButton => Wait.Until(d => d.FindElements(By.LinkText("Weiter"))).FirstOrDefault();
+        public IWebElement NextPageButton => Wait.Until(d => d.FindElements(By.XPath("//a[@data-qa='paginationLinkNext']"))).FirstOrDefault();
 
-        public IWebElement PrevPageButton => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.LinkText("Zurück")));
+        public IWebElement PrevPageButton => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//a[@data-qa='paginationLinkPrev']")));
     }
 }

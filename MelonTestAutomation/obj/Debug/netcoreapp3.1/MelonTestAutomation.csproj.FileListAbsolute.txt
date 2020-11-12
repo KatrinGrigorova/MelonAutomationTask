@@ -235,3 +235,4 @@ C:\Users\kgrigorova\Source\Repos\MelonAutomationTask\MelonTestAutomation\obj\Deb
 C:\Users\kgrigorova\Source\Repos\MelonAutomationTask\MelonTestAutomation\obj\Debug\netcoreapp3.1\MelonTestAutomation.dll
 C:\Users\kgrigorova\Source\Repos\MelonAutomationTask\MelonTestAutomation\obj\Debug\netcoreapp3.1\MelonTestAutomation.pdb
 C:\Users\kgrigorova\Source\Repos\MelonAutomationTask\MelonTestAutomation\obj\Debug\netcoreapp3.1\MelonTestAutomation.genruntimeconfig.cache
+C:\Users\kgrigorova\Source\Repos\MelonAutomationTask\MelonTestAutomation\obj\Debug\netcoreapp3.1\MelonTestAutomation.csprojAssemblyReference.cache

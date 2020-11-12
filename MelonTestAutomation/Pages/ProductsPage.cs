@@ -18,5 +18,21 @@ namespace MelonTestAutomation.Pages
         public IWebElement ProductAmount => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.ClassName("pdp-productDetails__price")));
 
         public IWebElement GoToCartButton => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.CssSelector("button[data-qa='productDetailspageSideBoxBtnsGoToCart']")));
+
+        public IWebElement SortProductsBy => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.Id("c-sortOrderSelect")));
+
+        public IReadOnlyList<IWebElement> SortProductsOptions => SortProductsBy.FindElements(By.XPath("option[contains(@data-qa, 'searchResultPageContentSortingSelectOption')]")).ToList();
+
+        public IReadOnlyList<IWebElement> FilterFrom => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.PresenceOfAllElementsLocatedBy(By.XPath("//div[@id='header_filtersDesktop_from_contributorName']//div[@data-qa='searchResultPageFilterOptionLink__from_contributorName']"))).ToList();
+
+        public IWebElement FilterFromShowMoreButton => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath("//div[@id='header_filtersDesktop_from_contributorName']//button[@data-qa='searchResultPageFilterCategoriesShowMoreBtn']")));
+
+        //public IReadOnlyList<IWebElement> FilterProductType => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.VisibilityOfAllElementsLocatedBy(By.XPath("//div[@id='header_filtersDesktop_productTypeName']"))).ToList();
+
+        public IReadOnlyList<IWebElement> FilterColour => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.VisibilityOfAllElementsLocatedBy(By.XPath("//div[@id='header_filtersDesktop_colour']//div[@data-qa='searchResultPageFilterOptionLink__colour']"))).ToList();
+
+        public IWebElement FilterColourShowMoreButton => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath("//div[@id='header_filtersDesktop_colour']//button[@data-qa='searchResultPageFilterCategoriesShowMoreBtn']")));
+
+        public IWebElement PageTitle => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//h1[contains(@class, 'productsList__title')]")));
     }
 }

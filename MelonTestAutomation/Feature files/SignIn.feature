@@ -30,7 +30,12 @@ Scenario Outline: Successful login starts and ends on the same page
 	Examples:
 		| email               | password    | account_type | page                     |
 		| waldenschmid@abv.bg | walden666   | myworld      | homePage                 |
-		| anabern@abv.bg      | anaCa$hback | cashback     | categoriesPage           |
+		| waldenschmid@abv.bg | walden666   | myworld      | categoriesPage           |
 		| waldenschmid@abv.bg | walden666   | myworld      | randomCategoryPage       |
-		| anabern@abv.bg      | anaCa$hback | cashback     | shoppingCartPage         |
+		| waldenschmid@abv.bg | walden666   | myworld      | shoppingCartPage         |
 		| waldenschmid@abv.bg | walden666   | myworld      | randomProductDetailsPage |
+		| anabern@abv.bg      | anaCa$hback | cashback     | homePage                 |
+		| anabern@abv.bg      | anaCa$hback | cashback     | categoriesPage           |
+		| anabern@abv.bg      | anaCa$hback | cashback     | randomCategoryPage       |
+		| anabern@abv.bg      | anaCa$hback | cashback     | shoppingCartPage         |
+		| anabern@abv.bg      | anaCa$hback | cashback     | randomProductDetailsPage |

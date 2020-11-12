@@ -1,5 +1,6 @@
 ﻿using MelonTestAutomation.Drivers;
 using OpenQA.Selenium;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace MelonTestAutomation.Pages
@@ -17,12 +18,22 @@ namespace MelonTestAutomation.Pages
 
         public IWebElement AllCategoriesDropDown => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath("//button[@data-qa='headerCategoriesOpenBtnDesktop']")));
 
-        public IWebElement AllCategories => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath("//a[@data-qa='headerCategoriesTreeTitleLink']")));
-
         public IWebElement MyAccountNotLoggedIn => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath("//a[@data-qa='headerUserNotLoggedIn']")));
 
         public IWebElement MyAccountLoggedIn => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath("//button[@data-qa='headerUserLoggedIn']")));
 
-        public IWebElement MyAccountCashbackIcon => Driver.FindElements(By.XPath("//button[@data-qa='headerUserLoggedIn']//i[contains(@class, 'icon-cashback')]")).FirstOrDefault();
+        public IWebElement MyAccountCashbackIcon => MyAccountLoggedIn.FindElements(By.XPath("//i[contains(@class, 'icon-cashback')]")).FirstOrDefault();
+
+
+        public IWebElement CategoryTreeTitle(string level)
+        {
+            return Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath($"//div[@tabindex='{level}']//a[@data-qa='headerCategoriesTreeTitleLink']")));
+        }
+
+        public List<IWebElement> CategoryTreeList(string level)
+        {
+            return Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.PresenceOfAllElementsLocatedBy(By.XPath($"//div[@tabindex='{level}']//a[@data-qa='headerCategoriesTreeItemLink']"))).ToList();
+        }
+
     }
 }

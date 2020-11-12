@@ -136,10 +136,15 @@ this.ScenarioInitialize(scenarioInfo);
         [NUnit.Framework.DescriptionAttribute("Successful login starts and ends on the same page")]
         [NUnit.Framework.CategoryAttribute("signinFromAnyPage")]
         [NUnit.Framework.TestCaseAttribute("waldenschmid@abv.bg", "walden666", "myworld", "homePage", null)]
-        [NUnit.Framework.TestCaseAttribute("anabern@abv.bg", "anaCa$hback", "cashback", "categoriesPage", null)]
+        [NUnit.Framework.TestCaseAttribute("waldenschmid@abv.bg", "walden666", "myworld", "categoriesPage", null)]
         [NUnit.Framework.TestCaseAttribute("waldenschmid@abv.bg", "walden666", "myworld", "randomCategoryPage", null)]
-        [NUnit.Framework.TestCaseAttribute("anabern@abv.bg", "anaCa$hback", "cashback", "shoppingCartPage", null)]
+        [NUnit.Framework.TestCaseAttribute("waldenschmid@abv.bg", "walden666", "myworld", "shoppingCartPage", null)]
         [NUnit.Framework.TestCaseAttribute("waldenschmid@abv.bg", "walden666", "myworld", "randomProductDetailsPage", null)]
+        [NUnit.Framework.TestCaseAttribute("anabern@abv.bg", "anaCa$hback", "cashback", "homePage", null)]
+        [NUnit.Framework.TestCaseAttribute("anabern@abv.bg", "anaCa$hback", "cashback", "categoriesPage", null)]
+        [NUnit.Framework.TestCaseAttribute("anabern@abv.bg", "anaCa$hback", "cashback", "randomCategoryPage", null)]
+        [NUnit.Framework.TestCaseAttribute("anabern@abv.bg", "anaCa$hback", "cashback", "shoppingCartPage", null)]
+        [NUnit.Framework.TestCaseAttribute("anabern@abv.bg", "anaCa$hback", "cashback", "randomProductDetailsPage", null)]
         public virtual void SuccessfulLoginStartsAndEndsOnTheSamePage(string email, string password, string account_Type, string page, string[] exampleTags)
         {
             string[] @__tags = new string[] {

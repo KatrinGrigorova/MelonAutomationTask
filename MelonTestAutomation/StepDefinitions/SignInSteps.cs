@@ -12,6 +12,7 @@ namespace MelonTestAutomation.StepDefinitions
     [Binding]
     public class SignInSteps
     {
+        #region Local Variables, Before and After scenario
         private MyworldSigninPage myworldSigninPage;
         private CashbackSigninPage cashbackSigninPage;
         private ShoppingCartCheckValuesSteps getCategoriesSteps;
@@ -24,7 +25,7 @@ namespace MelonTestAutomation.StepDefinitions
         {
             _context = context;
             _scenarioContext = scenarioContext;
-        }
+        }        
 
         [BeforeScenario("@signinFeature")]
         public void BeforeScenario()
@@ -38,7 +39,14 @@ namespace MelonTestAutomation.StepDefinitions
             getCategoriesSteps = new ShoppingCartCheckValuesSteps(_context) { };
         }
 
-        [Given(@"I am on page (.*)")]
+        [AfterScenario("@signinFeature")]
+        public void DesposeWebDriver()
+        {
+            _context.Driver.Dispose();
+        }
+        #endregion
+
+        [Given("I am on page (.*)")]
         public void GivenIAmOnPage(string page)
         {
             switch (page)
@@ -48,24 +56,23 @@ namespace MelonTestAutomation.StepDefinitions
                     break;
                 case "categoriesPage":
                     getCategoriesSteps.WhenIPressAllCategoriesDropdownMenu();
-                    getCategoriesSteps.WhenIPressAllCategoriesLink();
+                    getCategoriesSteps.WhenIPressAllCategoriesTitle();
 
                     url = _context.Driver.Url;
                     break;
                 case "randomCategoryPage":
                     getCategoriesSteps.WhenIPressAllCategoriesDropdownMenu();
-                    getCategoriesSteps.WhenIPressAllCategoriesLink();
+                    getCategoriesSteps.WhenIPressAllCategoriesTitle();
                     getCategoriesSteps.WhenIOpenRandomCategory();
                     break;
                 case "shoppingCartPage":
                     getCategoriesSteps.WhenIPressAllCategoriesDropdownMenu();
-                    getCategoriesSteps.WhenIPressAllCategoriesLink();
+                    getCategoriesSteps.WhenIPressAllCategoriesTitle();
                     getCategoriesSteps.WhenIOpenRandomCategory();
                     getCategoriesSteps.WhenIAddRandomAvailableProductsToTheShoppingCart(1);
                     getCategoriesSteps.WhenIGoToTheShoppingCart();
                     break;
-                case "randomProductDetailsPage":
-                   
+                case "randomProductDetailsPage":                  
                     OpenRandomProductDetails();
 
                     url = _context.Driver.Url;
@@ -81,7 +88,7 @@ namespace MelonTestAutomation.StepDefinitions
             _context.HomePage.MyAccountNotLoggedIn.Click();
         }
 
-        [When(@"I fill (.*) and (.*) with (.*)")]
+        [When("I fill (.*) and (.*) with (.*)")]
         public void WhenIFillTheCredentialFields(string email, string password, string accountType)
         {
             switch (accountType)
@@ -100,7 +107,7 @@ namespace MelonTestAutomation.StepDefinitions
             }
         }
 
-        [When(@"I press Login button in (.*) SignIn form")]
+        [When("I press Login button in (.*) SignIn form")]
         public void WhenIPressLoginButton(string accountType)
         {
             switch (accountType)
@@ -195,7 +202,7 @@ namespace MelonTestAutomation.StepDefinitions
             }
         }
 
-        [Then(@"I am on page (.*)")]
+        [Then("I am on page (.*)")]
         public void ThenIAmOnPage(string page)
         {
             Uri currentUrl;
@@ -247,14 +254,6 @@ namespace MelonTestAutomation.StepDefinitions
         }
 
 
-        [AfterScenario("@signinFeature")]
-        public void DesposeWebDriver()
-        {
-            _context.Driver.Dispose();
-        }
-
-
-
         #region Internal methods
         public void DeleteProductsFromShoppingCart()
         {
@@ -272,7 +271,7 @@ namespace MelonTestAutomation.StepDefinitions
         public void OpenRandomProductDetails()
         {
             getCategoriesSteps.WhenIPressAllCategoriesDropdownMenu();
-            getCategoriesSteps.WhenIPressAllCategoriesLink();
+            getCategoriesSteps.WhenIPressAllCategoriesTitle();
             getCategoriesSteps.WhenIOpenRandomCategory();
 
             int randomProduct = Enumerable.Range(1, _context.ProductsPage.CategoryProductList.ToList().Count).OrderBy(o => (new Random()).Next()).Take(1).FirstOrDefault();

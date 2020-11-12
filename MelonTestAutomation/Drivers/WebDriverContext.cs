@@ -1,7 +1,6 @@
 ﻿using MelonTestAutomation.Pages;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using TechTalk.SpecFlow;
 
 namespace MelonTestAutomation.Drivers
 {
@@ -10,14 +9,15 @@ namespace MelonTestAutomation.Drivers
         private IWebDriver _driver;
         private HomePage homePage;
         private ProductsPage productsPage;
+        private SearchPage searchPage;
         private ShoppingCartPage shoppingCartPage;
 
         public WebDriverContext()
         {
-            //_driver = driver;
             _driver = new ChromeDriver();
             homePage = new HomePage(_driver);
             productsPage = new ProductsPage(_driver);
+            searchPage = new SearchPage(_driver);
             shoppingCartPage = new ShoppingCartPage(_driver);
         }
 
@@ -26,6 +26,8 @@ namespace MelonTestAutomation.Drivers
         public HomePage HomePage => homePage;
 
         public ProductsPage ProductsPage => productsPage;
+
+        public SearchPage SearchPage => searchPage;
 
         public ShoppingCartPage ShoppingCartPage => shoppingCartPage;
 

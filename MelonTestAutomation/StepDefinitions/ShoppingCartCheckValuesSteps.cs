@@ -13,6 +13,7 @@ namespace MelonTestAutomation.StepDefinitions
     [Binding]
     public class ShoppingCartCheckValuesSteps
     {
+        #region Local Variables, Before and After scenario
         private string categoryLink;
         private List<string> productList;
         private readonly WebDriverContext _context;
@@ -25,18 +26,22 @@ namespace MelonTestAutomation.StepDefinitions
             _context = context;
         }
 
-        [Given(@"I am on the Home Page")]
-        public void GivenIAmOnTheHomePage()
-        {
-            _context.Driver.Navigate().GoToUrl("https://de.myworld.com/");
-            _context.Driver.Manage().Window.Maximize();
-        }
+        string url = "https://de.myworld.com/";
 
-        [Given(@"I press Accept cookies")]
-        public void WhenIPressAcceptCookies()
+        [BeforeScenario("@shoppingCart")]
+        public void BeforeScenario()
         {
+            _context.Driver.Navigate().GoToUrl(url);
+            _context.Driver.Manage().Window.Maximize();
             _context.HomePage.CookieButton.Click();
         }
+
+        [AfterScenario("@shoppingCart")]
+        public void DesposeWebDriver()
+        {
+            _context.Driver.Dispose();
+        }
+        #endregion
 
         [When(@"I press All categories dropdown menu")]
         public void WhenIPressAllCategoriesDropdownMenu()
@@ -44,10 +49,10 @@ namespace MelonTestAutomation.StepDefinitions
             _context.HomePage.AllCategoriesDropDown.Click();
         }
 
-        [When(@"I press All categories link")]
-        public void WhenIPressAllCategoriesLink()
+        [When("I press All categories title")]
+        public void WhenIPressAllCategoriesTitle()
         {
-            _context.HomePage.AllCategories.Click();
+            _context.HomePage.CategoryTreeTitle("1").Click();
         }
 
         [When(@"I open random category")]
@@ -194,12 +199,6 @@ namespace MelonTestAutomation.StepDefinitions
                 Assert.AreEqual(firstProductCartItem.Amount * firstProductCartItem.Quantity, firstProductCartItem.TotalAmount, "The first item total price is not correct.");
                 Assert.AreEqual(totalAmount, Decimal.Parse(_context.ShoppingCartPage.ShoppingCartTotalAmount.GetAttribute("data-qa-price-total")), "Total amount is not correct.");
             });
-        }
-
-        [AfterScenario("@shoppingCart")]
-        public void DesposeWebDriver()
-        {            
-            _context.Driver.Dispose();
-        }
+        }       
     }
 }

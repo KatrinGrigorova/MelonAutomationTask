@@ -5,8 +5,7 @@ Feature: PaginationCheck
 	I want the correct pages to be loaded
 
 Scenario: Catalog page full pagination check
-	Given I'm on the Home Page
-	And I press Accept cookies button
+	Given I am on page <page>
 	When I enter book to the Search bar
 	And I press the Search button
 	Then The book search list is displayed
@@ -35,3 +34,7 @@ Scenario: Catalog page full pagination check
 	Then Page 1 is loaded
 	When I press the last page
 	Then The last page is loaded
+
+	Examples:
+		| page     |
+		| homePage |

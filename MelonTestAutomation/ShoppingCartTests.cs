@@ -72,7 +72,7 @@ namespace MelonTestAutomation
 
                 //Add product
                 product.Click();
-                var isAddToCartButtonEnalbed = productsPage.AddProductToCartButton.Enabled;
+                bool isAddToCartButtonEnalbed = productsPage.AddProductToCartButton.Enabled;
 
                 if (isAddToCartButtonEnalbed == true)
                 {

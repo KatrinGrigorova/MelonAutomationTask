@@ -5,10 +5,9 @@ Feature: ShoppingCartCheckValues
 	I want the values of the items added to the shopping cart to be correct
 
 Scenario: Add n random products to the shopping cart and check the values
-	Given I am on the Home Page
-	And I press Accept cookies
+	Given I am on page <page>
 	When I press All categories dropdown menu
-	And I press All categories link
+	And I press All categories title
 	Then The page with all categories is loaded
 	When I open random category
 	Then The correct category is loaded
@@ -18,3 +17,7 @@ Scenario: Add n random products to the shopping cart and check the values
 	And The total price of each item in the cart and their total sum are correct
 	When I increase the product quantity
 	Then The total price of the product is correct
+
+	Examples:
+		| page     |
+		| homePage |
