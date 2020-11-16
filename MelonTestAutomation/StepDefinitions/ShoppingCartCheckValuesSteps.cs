@@ -67,8 +67,8 @@ namespace MelonTestAutomation.StepDefinitions
             category.Click();
         }
 
-        [When(@"I add (.*) random available products to the shopping cart")]
-        public void WhenIAddRandomAvailableProductsToTheShoppingCart(int productsNumber)
+        [When(@"I add (.*) random available products to the shopping cart (.*) quantity per product")]
+        public void WhenIAddRandomAvailableProductsToTheShoppingCart(int productsNumber, string productQuantity)
         {
             int shoppingCartQuantity = 0;
             productList = new List<string>();
@@ -84,11 +84,15 @@ namespace MelonTestAutomation.StepDefinitions
                 _context.HomePage.ScrollToElement(product);
                 product.Click();
 
-                bool isAddToCartButtonEnalbed = _context.ProductsPage.AddProductToCartButton.Enabled;
+                _context.ProductDetailsPage.ProductDetailsQuantityBox.SendKeys(Keys.Control + "a");
+                _context.ProductDetailsPage.ProductDetailsQuantityBox.SendKeys(Keys.Delete);
+                _context.ProductDetailsPage.ProductDetailsQuantityBox.SendKeys(productQuantity);
+
+                bool isAddToCartButtonEnalbed = _context.ProductDetailsPage.AddProductToCartButton.Enabled;
 
                 if (isAddToCartButtonEnalbed == true)
                 {
-                    _context.ProductsPage.AddProductToCartButton.Click();
+                    _context.ProductDetailsPage.AddProductToCartButton.Click();
 
                     _context.ShoppingCartPage.ShoppingCartItemQuantity((shoppingCartQuantity + 1).ToString());
 
@@ -109,7 +113,7 @@ namespace MelonTestAutomation.StepDefinitions
         [When(@"I go to the shopping cart")]
         public void WhenIGoToTheShoppingCart()
         {
-            _context.ProductsPage.GoToCartButton.Click();
+            _context.ProductDetailsPage.GoToCartButton.Click();
         }
 
         [When(@"I increase the product quantity")]

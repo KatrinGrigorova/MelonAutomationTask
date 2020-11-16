@@ -2,6 +2,7 @@
 using OpenQA.Selenium;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace MelonTestAutomation.Pages
 {
@@ -22,8 +23,7 @@ namespace MelonTestAutomation.Pages
 
         public IWebElement MyAccountLoggedIn => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath("//button[@data-qa='headerUserLoggedIn']")));
 
-        public IWebElement MyAccountCashbackIcon => MyAccountLoggedIn.FindElements(By.XPath("//i[contains(@class, 'icon-cashback')]")).FirstOrDefault();
-
+        public IWebElement MyAccountCashbackIcon => MyAccountLoggedIn.FindElements(By.XPath("//button[@data-qa='headerUserLoggedIn']//i[contains(@class, 'icon-cashback')]")).FirstOrDefault();
 
         public IWebElement CategoryTreeTitle(string level)
         {
@@ -35,5 +35,10 @@ namespace MelonTestAutomation.Pages
             return Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.PresenceOfAllElementsLocatedBy(By.XPath($"//div[@tabindex='{level}']//a[@data-qa='headerCategoriesTreeItemLink']"))).ToList();
         }
 
+        public IWebElement MyWorldMainLogo => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath("//a[@data-qa='headerMainLogoLink']")));
+
+        public IReadOnlyList<IWebElement> RemoveItemFromTheCart => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.VisibilityOfAllElementsLocatedBy(By.XPath("//button[contains(@data-qa, 'shoppingCartPopUpRemoveItemBtn')]"))).ToList();
+
+        public IWebElement ShoppingCartIcon => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath("//a[@data-qa='headerShoppingCartLink']"))); 
     }
 }

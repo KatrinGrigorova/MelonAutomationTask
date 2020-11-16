@@ -125,7 +125,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Then("The correct category is loaded", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
 #line 14
- testRunner.When("I add 3 random available products to the shopping cart", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I add 3 random available products to the shopping cart 1 quantity per product", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 15
  testRunner.And("I go to the shopping cart", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");

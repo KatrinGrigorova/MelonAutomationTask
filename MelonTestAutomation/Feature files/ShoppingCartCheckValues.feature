@@ -11,7 +11,7 @@ Scenario: Add n random products to the shopping cart and check the values
 	Then The page with all categories is loaded
 	When I open random category
 	Then The correct category is loaded
-	When I add 3 random available products to the shopping cart
+	When I add 3 random available products to the shopping cart 1 quantity per product
 	And I go to the shopping cart
 	Then The correct products are added to the shopping cart
 	And The total price of each item in the cart and their total sum are correct

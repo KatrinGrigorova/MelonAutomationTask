@@ -81,19 +81,19 @@ namespace MelonTestAutomation.FeatureFiles
         [NUnit.Framework.DescriptionAttribute("Choose category from third level category tree and apply filters on the Catalog p" +
             "age")]
         [NUnit.Framework.CategoryAttribute("thirdLevelCategoryTree")]
-        [NUnit.Framework.TestCaseAttribute("de", "priceAscending", "Bosch", "Schwarz", null)]
-        [NUnit.Framework.TestCaseAttribute("at", "priceAscending", "Bosch", "Schwarz", null)]
-        [NUnit.Framework.TestCaseAttribute("ch", "priceAscending", "Bosch", "Schwarz", null)]
-        [NUnit.Framework.TestCaseAttribute("it", "priceAscending", "Bosch", "Nero", null)]
-        [NUnit.Framework.TestCaseAttribute("hu", "priceAscending", "Bosch", "Black", null)]
-        [NUnit.Framework.TestCaseAttribute("cz", "priceAscending", "Bosch", "Black", null)]
-        [NUnit.Framework.TestCaseAttribute("sk", "priceAscending", "Bosch", "Black", null)]
-        [NUnit.Framework.TestCaseAttribute("si", "priceAscending", "Bosch", "Black", null)]
-        [NUnit.Framework.TestCaseAttribute("se", "priceAscending", "Bosch", "Black", null)]
-        [NUnit.Framework.TestCaseAttribute("pl", "priceAscending", "Bosch", "Czarny", null)]
-        [NUnit.Framework.TestCaseAttribute("no", "priceAscending", "Bosch", "Black", null)]
-        [NUnit.Framework.TestCaseAttribute("pt", "priceAscending", "Bosch", "Black", null)]
-        public virtual void ChooseCategoryFromThirdLevelCategoryTreeAndApplyFiltersOnTheCatalogPage(string domain, string sortBy, string brandFilter, string colourFilter, string[] exampleTags)
+        [NUnit.Framework.TestCaseAttribute("de", "priceAscending", null)]
+        [NUnit.Framework.TestCaseAttribute("at", "priceAscending", null)]
+        [NUnit.Framework.TestCaseAttribute("ch", "priceAscending", null)]
+        [NUnit.Framework.TestCaseAttribute("it", "priceAscending", null)]
+        [NUnit.Framework.TestCaseAttribute("hu", "priceAscending", null)]
+        [NUnit.Framework.TestCaseAttribute("cz", "priceAscending", null)]
+        [NUnit.Framework.TestCaseAttribute("sk", "priceAscending", null)]
+        [NUnit.Framework.TestCaseAttribute("si", "priceAscending", null)]
+        [NUnit.Framework.TestCaseAttribute("se", "priceAscending", null)]
+        [NUnit.Framework.TestCaseAttribute("pl", "priceAscending", null)]
+        [NUnit.Framework.TestCaseAttribute("no", "priceAscending", null)]
+        [NUnit.Framework.TestCaseAttribute("pt", "priceAscending", null)]
+        public virtual void ChooseCategoryFromThirdLevelCategoryTreeAndApplyFiltersOnTheCatalogPage(string domain, string sortBy, string[] exampleTags)
         {
             string[] @__tags = new string[] {
                     "thirdLevelCategoryTree"};
@@ -105,8 +105,6 @@ namespace MelonTestAutomation.FeatureFiles
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("domain", domain);
             argumentsOfScenario.Add("sortBy", sortBy);
-            argumentsOfScenario.Add("brandFilter", brandFilter);
-            argumentsOfScenario.Add("colourFilter", colourFilter);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Choose category from third level category tree and apply filters on the Catalog p" +
                     "age", null, tagsOfScenario, argumentsOfScenario);
 #line 8
@@ -160,16 +158,16 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.When(string.Format("I sort by {0}", sortBy), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 19
- testRunner.And(string.Format("I apply Brand {0} filter", brandFilter), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I apply Brand filter", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 20
- testRunner.Then(string.Format("{0} filter is applyed correctly", brandFilter), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("Brand filter is applyed correctly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
 #line 21
- testRunner.When(string.Format("I apply Colour {0} filter", colourFilter), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I apply Colour filter", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 22
- testRunner.Then(string.Format("{0} filter is applyed correctly", colourFilter), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("Colour filter is applyed correctly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

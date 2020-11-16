@@ -21,6 +21,10 @@ namespace MelonTestAutomation.Pages
 
         public IReadOnlyList<IWebElement> ShoppingCartProductsNames => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.VisibilityOfAllElementsLocatedBy(By.XPath("//a[contains(@data-qa, 'shoppingCartProductLinkDesktop')]"))).ToList();
 
-        public IReadOnlyList<IWebElement> RemoveItemFromTheCart => Driver.FindElements(By.XPath("//button[contains(@data-qa, 'shoppingCartViewItemRemoveBtn')]")).ToList();
+        public IReadOnlyList<IWebElement> RemoveItemFromTheCart => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.VisibilityOfAllElementsLocatedBy(By.XPath("//button[contains(@data-qa, 'shoppingCartViewItemRemoveBtn')]"))).ToList();
+
+        public IWebElement ShoppingCartCheckoutButton => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath("//a[@data-qa='checkoutSideboxNextStepBtn']")));
+
+        public IWebElement EmptyShoppingCart => Driver.FindElements(By.XPath("//section[@data-qa='shoppingCartEmptyCont']")).FirstOrDefault();
     }
 }

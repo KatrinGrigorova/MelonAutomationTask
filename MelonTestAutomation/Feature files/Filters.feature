@@ -16,22 +16,22 @@ Scenario Outline: Choose category from third level category tree and apply filte
 	When I press Do It Yourself (DIY) link from the Third level category tree
 	Then Correct page is loaded
 	When I sort by <sortBy>
-	And I apply Brand <brandFilter> filter
-	Then <brandFilter> filter is applyed correctly
-	When I apply Colour <colourFilter> filter
-	Then <colourFilter> filter is applyed correctly
+	And I apply Brand filter
+	Then Brand filter is applyed correctly
+	When I apply Colour filter
+	Then Colour filter is applyed correctly
 
 	Examples:
-		| domain | sortBy         | brandFilter | colourFilter |
-		| de     | priceAscending | Bosch       | Schwarz      |
-		| at     | priceAscending | Bosch       | Schwarz      |
-		| ch     | priceAscending | Bosch       | Schwarz      |
-		| it     | priceAscending | Bosch       | Nero         |
-		| hu     | priceAscending | Bosch       | Black        |
-		| cz     | priceAscending | Bosch       | Black        |
-		| sk     | priceAscending | Bosch       | Black        |
-		| si     | priceAscending | Bosch       | Black        |
-		| se     | priceAscending | Bosch       | Black        |
-		| pl     | priceAscending | Bosch       | Czarny       |
-		| no     | priceAscending | Bosch       | Black        |
-		| pt     | priceAscending | Bosch       | Black        |
+		| domain | sortBy         |
+		| de     | priceAscending |
+		| at     | priceAscending |
+		| ch     | priceAscending |
+		| it     | priceAscending |
+		| hu     | priceAscending |
+		| cz     | priceAscending |
+		| sk     | priceAscending |
+		| si     | priceAscending |
+		| se     | priceAscending |
+		| pl     | priceAscending |
+		| no     | priceAscending |
+		| pt     | priceAscending |

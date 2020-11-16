@@ -12,9 +12,11 @@ namespace MelonTestAutomation.StepDefinitions
     {
         #region Local Variables, Before and After scenario
         private WebDriverContext _context;
-        string categoryName;
-        string categoryLink;
-        string url;
+        private string categoryName;
+        private string categoryLink;
+        private string url;
+        private string brandFilter;
+        private string colourFilter;
 
         public FiltersSteps(WebDriverContext context)
         {
@@ -136,18 +138,20 @@ namespace MelonTestAutomation.StepDefinitions
             }
         }
 
-        [When("I apply (.*) (.*) filter")]
-        public void WhenIApplyFilter(string filterType, string filter)
+        [When("I apply (.*) filter")]
+        public void WhenIApplyFilter(string filterType)
         {
             switch (filterType)
             {
                 case "Brand":
                     _context.ProductsPage.FilterFromShowMoreButton.Click();
-                    _context.ProductsPage.FilterFrom.Where(f => f.GetAttribute("title") == filter).FirstOrDefault().Click();
+                    _context.ProductsPage.FilterFrom[0].Click();
+                    brandFilter = _context.ProductsPage.FilterFrom[0].Text;
                     break;
                 case "Colour":
                     _context.ProductsPage.FilterColourShowMoreButton.Click();
-                    _context.ProductsPage.FilterColour.Where(f => f.GetAttribute("title") == filter).FirstOrDefault().Click();
+                    _context.ProductsPage.FilterColour[0].Click();
+                    colourFilter = _context.ProductsPage.FilterColour[0].Text;
                     break;
                 default:
                     break;
@@ -193,13 +197,31 @@ namespace MelonTestAutomation.StepDefinitions
         }
 
         [Then("(.*) filter is applyed correctly")]
-        public void ThenFilterIsApplyedCorrectly(string filter)
+        public void ThenFilterIsApplyedCorrectly(string filterType)
         {
-            Uri currentUrl = new Uri(_context.Driver.Url);
-            string urlDirectory = currentUrl.Segments.LastOrDefault();
-            bool isURLContainsFilter = urlDirectory.Contains(filter);
+            Uri currentUrl;
+            string urlDirectory;
+            bool isURLContainsFilter;
 
-            Assert.IsTrue(isURLContainsFilter);
+            switch (filterType)
+            {
+                case "Brand":
+                    currentUrl = new Uri(_context.Driver.Url);
+                    urlDirectory = currentUrl.Segments.LastOrDefault();
+                    isURLContainsFilter = urlDirectory.Contains(brandFilter);
+
+                    Assert.IsTrue(isURLContainsFilter);
+                    break;
+                case "Colour":
+                    currentUrl = new Uri(_context.Driver.Url);
+                    urlDirectory = currentUrl.Segments.LastOrDefault();
+                    isURLContainsFilter = urlDirectory.Contains(colourFilter);
+
+                    Assert.IsTrue(isURLContainsFilter, "The filter is not the expected one.");
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

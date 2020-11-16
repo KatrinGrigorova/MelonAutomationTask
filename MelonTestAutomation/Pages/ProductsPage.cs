@@ -13,12 +13,6 @@ namespace MelonTestAutomation.Pages
 
         public IReadOnlyList<IWebElement> CategoryProductList => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.VisibilityOfAllElementsLocatedBy(By.XPath("//a[@data-qa='searchResultPageProductLink']"))).ToList();
 
-        public IWebElement AddProductToCartButton => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.CssSelector("button[data-qa='productDetailspageSideBoxBtnsAddToCart']")));
-
-        public IWebElement ProductAmount => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.ClassName("pdp-productDetails__price")));
-
-        public IWebElement GoToCartButton => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.CssSelector("button[data-qa='productDetailspageSideBoxBtnsGoToCart']")));
-
         public IWebElement SortProductsBy => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.Id("c-sortOrderSelect")));
 
         public IReadOnlyList<IWebElement> SortProductsOptions => SortProductsBy.FindElements(By.XPath("option[contains(@data-qa, 'searchResultPageContentSortingSelectOption')]")).ToList();
@@ -27,9 +21,7 @@ namespace MelonTestAutomation.Pages
 
         public IWebElement FilterFromShowMoreButton => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath("//div[@id='header_filtersDesktop_from_contributorName']//button[@data-qa='searchResultPageFilterCategoriesShowMoreBtn']")));
 
-        //public IReadOnlyList<IWebElement> FilterProductType => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.VisibilityOfAllElementsLocatedBy(By.XPath("//div[@id='header_filtersDesktop_productTypeName']"))).ToList();
-
-        public IReadOnlyList<IWebElement> FilterColour => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.VisibilityOfAllElementsLocatedBy(By.XPath("//div[@id='header_filtersDesktop_colour']//div[@data-qa='searchResultPageFilterOptionLink__colour']"))).ToList();
+        public IReadOnlyList<IWebElement> FilterColour => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.PresenceOfAllElementsLocatedBy(By.XPath("//div[@id='header_filtersDesktop_colour']//div[@data-qa='searchResultPageFilterOptionLink__colour']"))).ToList();
 
         public IWebElement FilterColourShowMoreButton => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath("//div[@id='header_filtersDesktop_colour']//button[@data-qa='searchResultPageFilterCategoriesShowMoreBtn']")));
 
