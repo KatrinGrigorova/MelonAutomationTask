@@ -27,7 +27,7 @@ namespace MelonTestAutomation.Pages
 
         public IWebElement CategoryTreeTitle(string level)
         {
-            return Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath($"//div[@tabindex='{level}']//a[@data-qa='headerCategoriesTreeTitleLink']")));
+            return Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath($"//div[@data-qa='{level}']//a[@data-qa='headerCategoriesTreeTitleLink']")));
         }
 
         public List<IWebElement> CategoryTreeList(string level)

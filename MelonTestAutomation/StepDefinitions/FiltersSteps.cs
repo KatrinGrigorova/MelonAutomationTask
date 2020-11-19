@@ -114,9 +114,9 @@ namespace MelonTestAutomation.StepDefinitions
                 case "Third":
                     if (categoryTreeTitle == "Do It Yourself (DIY)")
                     {
-                        categoryName = _context.HomePage.CategoryTreeTitle("3").GetAttribute("text");
-                        categoryLink = _context.HomePage.CategoryTreeTitle("3").GetAttribute("href");
-                        _context.HomePage.CategoryTreeTitle("3").Click();
+                        categoryName = _context.HomePage.CategoryTreeTitle("headerCategoriesTreeLevelThree").GetAttribute("text");
+                        categoryLink = _context.HomePage.CategoryTreeTitle("headerCategoriesTreeLevelThree").GetAttribute("href");
+                        _context.HomePage.CategoryTreeTitle("headerCategoriesTreeLevelThree").Click();
                     }
                     break;
                 default:
@@ -164,17 +164,17 @@ namespace MelonTestAutomation.StepDefinitions
             switch (levelNumber)
             {
                 case "First":
-                    bool isFirstLevelCategoryTreeDisplayed = _context.HomePage.CategoryTreeTitle("1").Displayed;
+                    bool isFirstLevelCategoryTreeDisplayed = _context.HomePage.CategoryTreeTitle("headerCategoriesTreeLevelOne").Displayed;
 
                     Assert.IsTrue(isFirstLevelCategoryTreeDisplayed, "First level category tree is not displayed.");
                     break;
                 case "Second":
-                    bool isSecondLevelCategoryTreeDisplayed = _context.HomePage.CategoryTreeTitle("2").Displayed;
+                    bool isSecondLevelCategoryTreeDisplayed = _context.HomePage.CategoryTreeTitle("headerCategoriesTreeLevelTwo").Displayed;
 
                     Assert.IsTrue(isSecondLevelCategoryTreeDisplayed, "First level category tree is not displayed.");
                     break;
                 case "Third":
-                    bool isThirdLevelCategoryTreeDisplayed = _context.HomePage.CategoryTreeTitle("3").Displayed;
+                    bool isThirdLevelCategoryTreeDisplayed = _context.HomePage.CategoryTreeTitle("headerCategoriesTreeLevelThree").Displayed;
 
                     Assert.IsTrue(isThirdLevelCategoryTreeDisplayed, "First level category tree is not displayed.");
                     break;

@@ -52,7 +52,7 @@ namespace MelonTestAutomation.StepDefinitions
         [When("I press All categories title")]
         public void WhenIPressAllCategoriesTitle()
         {
-            _context.HomePage.CategoryTreeTitle("1").Click();
+            _context.HomePage.CategoryTreeTitle("headerCategoriesTreeLevelOne").Click();
         }
 
         [When(@"I open random category")]
@@ -68,7 +68,7 @@ namespace MelonTestAutomation.StepDefinitions
         }
 
         [When(@"I add (.*) random available products to the shopping cart (.*) quantity per product")]
-        public void WhenIAddRandomAvailableProductsToTheShoppingCart(int productsNumber, string productQuantity)
+        public void WhenIAddMultipleRandomAvailableProductsToTheShoppingCart(int productsNumber, string productQuantity)
         {
             int shoppingCartQuantity = 0;
             productList = new List<string>();
@@ -99,7 +99,6 @@ namespace MelonTestAutomation.StepDefinitions
                     shoppingCartQuantity++;
 
                     productList.Add(productName);
-
                 }
 
 

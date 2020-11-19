@@ -1,8 +1,6 @@
 ﻿using MelonTestAutomation.Drivers;
-using MelonTestAutomation.Pages;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Interactions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,8 +13,6 @@ namespace MelonTestAutomation.StepDefinitions
     public class SignInSteps
     {
         #region Local Variables, Before and After scenario
-        private MyworldSigninPage myworldSigninPage;
-        private CashbackSigninPage cashbackSigninPage;
         private ShoppingCartCheckValuesSteps getCategoriesSteps;
         private WebDriverContext _context;
         private readonly ScenarioContext _scenarioContext;
@@ -29,6 +25,7 @@ namespace MelonTestAutomation.StepDefinitions
         {
             _context = context;
             _scenarioContext = scenarioContext;
+            getCategoriesSteps = new ShoppingCartCheckValuesSteps(_context) { };
         }
 
         [BeforeScenario("@signinFeature")]
@@ -37,15 +34,13 @@ namespace MelonTestAutomation.StepDefinitions
             _context.Driver.Navigate().GoToUrl(url);
             _context.Driver.Manage().Window.Maximize();
             _context.HomePage.CookieButton.Click();
-
-            myworldSigninPage = new MyworldSigninPage(_context.Driver);
-            cashbackSigninPage = new CashbackSigninPage(_context.Driver);
-            getCategoriesSteps = new ShoppingCartCheckValuesSteps(_context) { };
+            DeleteProductsFromShoppingCart();
         }
 
         [AfterScenario("@signinFeature")]
         public void DesposeWebDriver()
         {
+            DeleteProductsFromShoppingCart();
             _context.Driver.Dispose();
         }
         #endregion
@@ -75,7 +70,7 @@ namespace MelonTestAutomation.StepDefinitions
                     getCategoriesSteps.WhenIPressAllCategoriesDropdownMenu();
                     getCategoriesSteps.WhenIPressAllCategoriesTitle();
                     getCategoriesSteps.WhenIOpenRandomCategory();
-                    getCategoriesSteps.WhenIAddRandomAvailableProductsToTheShoppingCart(1, "1");
+                    getCategoriesSteps.WhenIAddMultipleRandomAvailableProductsToTheShoppingCart(1, "1");
                     getCategoriesSteps.WhenIGoToTheShoppingCart();
                     break;
                 case "randomProductDetailsPage":
@@ -87,7 +82,7 @@ namespace MelonTestAutomation.StepDefinitions
                     getCategoriesSteps.WhenIPressAllCategoriesDropdownMenu();
                     getCategoriesSteps.WhenIPressAllCategoriesTitle();
                     getCategoriesSteps.WhenIOpenRandomCategory();
-                    getCategoriesSteps.WhenIAddRandomAvailableProductsToTheShoppingCart(1, "1");
+                    getCategoriesSteps.WhenIAddMultipleRandomAvailableProductsToTheShoppingCart(1, "1");
                     getCategoriesSteps.WhenIGoToTheShoppingCart();
                     _context.ShoppingCartPage.ShoppingCartCheckoutButton.Click();
                     break;
@@ -111,13 +106,13 @@ namespace MelonTestAutomation.StepDefinitions
             switch (accountType)
             {
                 case "myworld":
-                    myworldSigninPage.LoginInputEmail.SendKeys(email);
-                    myworldSigninPage.LoginInputPassword.SendKeys(password);
+                    _context.MyworldSigninPage.LoginInputEmail.SendKeys(email);
+                    _context.MyworldSigninPage.LoginInputPassword.SendKeys(password);
                     break;
                 case "cashback":
-                    myworldSigninPage.LoginCashBackSubmitButton.Click();
-                    cashbackSigninPage.LoginInputEmail.SendKeys(email);
-                    cashbackSigninPage.LoginInputPassword.SendKeys(password);
+                    _context.MyworldSigninPage.LoginCashBackSubmitButton.Click();
+                    _context.CashbackSigninPage.LoginInputEmail.SendKeys(email);
+                    _context.CashbackSigninPage.LoginInputPassword.SendKeys(password);
                     break;
                 default:
                     break;
@@ -130,10 +125,10 @@ namespace MelonTestAutomation.StepDefinitions
             switch (accountType)
             {
                 case "myworld":
-                    myworldSigninPage.LoginSubmitButton.Click();
+                    _context.MyworldSigninPage.LoginSubmitButton.Click();
                     break;
                 case "cashback":
-                    cashbackSigninPage.LoginSubmitButton.Click();
+                    _context.CashbackSigninPage.LoginSubmitButton.Click();
                     break;
                 default:
                     break;
@@ -229,8 +224,6 @@ namespace MelonTestAutomation.StepDefinitions
                     currentUrl = new Uri(_context.Driver.Url);
                     urlDirectory = currentUrl.Segments.LastOrDefault();
 
-                    DeleteProductsFromShoppingCart();
-
                     Assert.Multiple(() =>
                     {
                         Assert.AreEqual("cart", urlDirectory, "Wrong page is loaded.");
@@ -246,8 +239,6 @@ namespace MelonTestAutomation.StepDefinitions
                 case "checkout":
                     currentUrl = new Uri(_context.Driver.Url);
                     urlDirectory = currentUrl.Segments.LastOrDefault();
-
-                    DeleteProductsFromShoppingCart();
 
                     Assert.AreEqual("address", urlDirectory, "Wrong page is loaded.");
                     break;
