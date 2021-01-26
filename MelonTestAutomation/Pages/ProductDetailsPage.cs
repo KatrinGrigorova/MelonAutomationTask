@@ -1,7 +1,4 @@
-﻿using MelonTestAutomation.Drivers;
-using OpenQA.Selenium;
-using System.Collections.Generic;
-using System.Linq;
+﻿using OpenQA.Selenium;
 
 namespace MelonTestAutomation.Pages
 {
@@ -9,13 +6,14 @@ namespace MelonTestAutomation.Pages
     {        
         public ProductDetailsPage(IWebDriver driver) : base(driver) { }
 
-        public IWebElement AddProductToCartButton => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.CssSelector("button[data-qa='productDetailspageSideBoxBtnsAddToCart']")));
+        public IWebElement AddProductToCartButton => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//div[@class='container__inner']//button[@data-qa='add-to-cart-button']")));
 
-        //public IWebElement ProductAmount => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.ClassName("pdp-productDetails__price")));
+        //public IWebElement GoToCartButton => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.CssSelector("button[data-qa='productDetailspageSideBoxBtnsGoToCart']")));
 
-        public IWebElement GoToCartButton => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.CssSelector("button[data-qa='productDetailspageSideBoxBtnsGoToCart']")));
+        public IWebElement ProductDetailsQuantityBox => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//input[@data-qa='quantity-input']")));
 
-        public IWebElement ProductDetailsQuantityBox => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//input[@data-qa='productDetailsPageQtyInput']")));
+        public IWebElement ProductDetailsIncreaseQuantity => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath("//div[contains(@class='counter__incr')]")));
 
+        public IWebElement ProductAmount => Wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//span[@class='money-price money-price--pdp']//span[@class='money-price__amount ']")));
     }
 }

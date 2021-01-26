@@ -795,19 +795,19 @@
           "lib/netstandard2.0/WebDriver.dll": {}
         }
       },
-      "Selenium.WebDriver.ChromeDriver/85.0.4183.8700": {
+      "Selenium.WebDriver.ChromeDriver/87.0.4280.8800": {
         "type": "package",
         "build": {
           "build/Selenium.WebDriver.ChromeDriver.targets": {}
         }
       },
-      "Selenium.WebDriver.GeckoDriver/0.27.0": {
+      "Selenium.WebDriver.GeckoDriver/0.28.0": {
         "type": "package",
         "build": {
           "build/Selenium.WebDriver.GeckoDriver.targets": {}
         }
       },
-      "Selenium.WebDriver.MSEdgeDriver/85.0.564.41": {
+      "Selenium.WebDriver.MSEdgeDriver/87.0.669": {
         "type": "package",
         "build": {
           "build/Selenium.WebDriver.MSEdgeDriver.targets": {}
@@ -3247,10 +3247,10 @@
         "selenium.webdriver.nuspec"
       ]
     },
-    "Selenium.WebDriver.ChromeDriver/85.0.4183.8700": {
-      "sha512": "UaHj0RDkUoNtvYTVfZJk9Im/YpQX2nxugUZ5qWwx9phVu33tiecpBeTqQk4IPz8GQqUUjKdlT4QxKgu8VPafnA==",
+    "Selenium.WebDriver.ChromeDriver/87.0.4280.8800": {
+      "sha512": "7bgZ2QNhYFofxDdlGVfUVgNJ6B785u/UeoFjEzB7O2EiggPitosPqqB/TG0KpJwvqgQTs+nNJus3rn9yNMHa1A==",
       "type": "package",
-      "path": "selenium.webdriver.chromedriver/85.0.4183.8700",
+      "path": "selenium.webdriver.chromedriver/87.0.4280.8800",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -3260,14 +3260,14 @@
         "driver/mac64/chromedriver",
         "driver/win32/chromedriver.exe",
         "nupkg-icon.png",
-        "selenium.webdriver.chromedriver.85.0.4183.8700.nupkg.sha512",
+        "selenium.webdriver.chromedriver.87.0.4280.8800.nupkg.sha512",
         "selenium.webdriver.chromedriver.nuspec"
       ]
     },
-    "Selenium.WebDriver.GeckoDriver/0.27.0": {
-      "sha512": "0B9C4dDYdEm8gf4NZ75haijZREuZEcnHKDzzGm9YvkpYxdFgexDMSaqT83vimibXfDSNjcMajodQn+3XROB+Iw==",
+    "Selenium.WebDriver.GeckoDriver/0.28.0": {
+      "sha512": "vW4OyxJAIQxZSjPxKtOlLClA2gSBvZUvzSdWTXeKJCXbgRyefdCaYRSEkaGqwxz7Ck+vBTXeRxd7v7LS6uoUfQ==",
       "type": "package",
-      "path": "selenium.webdriver.geckodriver/0.27.0",
+      "path": "selenium.webdriver.geckodriver/0.28.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -3278,14 +3278,14 @@
         "driver/win32/geckodriver.exe",
         "driver/win64/geckodriver.exe",
         "nupkg-icon.png",
-        "selenium.webdriver.geckodriver.0.27.0.nupkg.sha512",
+        "selenium.webdriver.geckodriver.0.28.0.nupkg.sha512",
         "selenium.webdriver.geckodriver.nuspec"
       ]
     },
-    "Selenium.WebDriver.MSEdgeDriver/85.0.564.41": {
-      "sha512": "t3Z9iArUqmj5+e3/an2IIWycyM4lf34PglJbSCyt/UJ6/CjqtIR99SoIhDHJfkrRAWo+xeX3Nb9Y5G9h/T5bYA==",
+    "Selenium.WebDriver.MSEdgeDriver/87.0.669": {
+      "sha512": "rxasnDGbE/0uKaXxGARflBA01RG6kN830iD5AfDi8eWh1gq1frCH5lAN743y+4QGKf6iMiMHUOCLD2gAu8nfJA==",
       "type": "package",
-      "path": "selenium.webdriver.msedgedriver/85.0.564.41",
+      "path": "selenium.webdriver.msedgedriver/87.0.669",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -3294,7 +3294,7 @@
         "driver/win32/msedgedriver.exe",
         "driver/win64/msedgedriver.exe",
         "license/license.txt",
-        "selenium.webdriver.msedgedriver.85.0.564.41.nupkg.sha512",
+        "selenium.webdriver.msedgedriver.87.0.669.nupkg.sha512",
         "selenium.webdriver.msedgedriver.nuspec"
       ]
     },
@@ -7134,9 +7134,9 @@
       "NUnit >= 3.12.0",
       "NUnit3TestAdapter >= 3.17.0",
       "Selenium.WebDriver >= 3.141.0",
-      "Selenium.WebDriver.ChromeDriver >= 85.0.4183.8700",
-      "Selenium.WebDriver.GeckoDriver >= 0.27.0",
-      "Selenium.WebDriver.MSEdgeDriver >= 85.0.564.41",
+      "Selenium.WebDriver.ChromeDriver >= 87.0.4280.8800",
+      "Selenium.WebDriver.GeckoDriver >= 0.28.0",
+      "Selenium.WebDriver.MSEdgeDriver >= 87.0.669",
       "SpecFlow >= 3.4.31",
       "SpecFlow.NUnit >= 3.4.31",
       "System.Configuration.ConfigurationManager >= 4.7.0"
@@ -7167,6 +7167,7 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "projectReferences": {}
         }
       },
@@ -7178,6 +7179,7 @@
     },
     "frameworks": {
       "netcoreapp3.1": {
+        "targetAlias": "netcoreapp3.1",
         "dependencies": {
           "DotNetSeleniumExtras.WaitHelpers": {
             "target": "Package",
@@ -7213,15 +7215,15 @@
           },
           "Selenium.WebDriver.ChromeDriver": {
             "target": "Package",
-            "version": "[85.0.4183.8700, )"
+            "version": "[87.0.4280.8800, )"
           },
           "Selenium.WebDriver.GeckoDriver": {
             "target": "Package",
-            "version": "[0.27.0, )"
+            "version": "[0.28.0, )"
           },
           "Selenium.WebDriver.MSEdgeDriver": {
             "target": "Package",
-            "version": "[85.0.564.41, )"
+            "version": "[87.0.669, )"
           },
           "SpecFlow": {
             "target": "Package",
@@ -7251,7 +7253,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
       }
     }
   }

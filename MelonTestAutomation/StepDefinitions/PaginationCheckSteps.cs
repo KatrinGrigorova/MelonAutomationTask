@@ -29,7 +29,7 @@ namespace MelonTestAutomation.StepDefinitions
         {
             _context.Driver.Navigate().GoToUrl(url);
             _context.Driver.Manage().Window.Maximize();
-            _context.HomePage.CookieButton.Click();
+            _context.HomePage.AcceptCookiesButton.Click();
         }
 
         [AfterScenario("@pagination")]
@@ -45,10 +45,10 @@ namespace MelonTestAutomation.StepDefinitions
             _context.HomePage.SearchBar.SendKeys(product);
         }
 
-        [When(@"I press the Search button")]
-        public void GivenIPressTheSearchButton()
+        [When(@"I click the Search button")]
+        public void GivenIClickTheSearchButton()
         {
-            _context.HomePage.SearchButton.Click();
+            _context.HomePage.SearchBar.SendKeys(Keys.Enter);
         }
 
         [When(@"I scroll to the bottom of search result list")]
@@ -57,41 +57,27 @@ namespace MelonTestAutomation.StepDefinitions
             _context.HomePage.ScrollToElement(_context.SearchPage.Pagination);
         }
 
-        [When("I press page (.*)")]
-        public void WhenIPressPage(string pageNumber)
+        [When("I click page (.*)")]
+        public void WhenIClickPage(string pageNumber)
         {
             page = _context.SearchPage.PageNumberList.Where(e => e.Text == pageNumber).FirstOrDefault();
             page.Click();
         }
 
-        [When(@"I press Next page")]
-        public void WhenIPressNextPage()
+        [When(@"I click Next page")]
+        public void WhenIClickNextPage()
         {
             _context.SearchPage.NextPageButton.Click();
         }
 
-        [When(@"I press previous page")]
-        public void WhenIPressPreviousPage()
+        [When(@"I click previous page")]
+        public void WhenIClickPreviousPage()
         {
             _context.SearchPage.PrevPageButton.Click();
         }
 
-        [When(@"I press second ellipsis")]
-        public void WhenIPressSecondEllipsis()
-        {
-            page = _context.SearchPage.PageNumberList.Where(e => e.Text == "...").LastOrDefault();
-            page.Click();
-        }
-
-        [When(@"I press first ellipsis")]
-        public void WhenIPressFirstEllipsis()
-        {
-            page = _context.SearchPage.PageNumberList.Where(e => e.Text == "...").FirstOrDefault();
-            page.Click();
-        }
-
-        [When(@"I press the last page")]
-        public void WhenIPressTheLastPage()
+        [When(@"I click the last page")]
+        public void WhenIClickTheLastPage()
         {
             page = _context.SearchPage.PageNumberList.LastOrDefault();
             page.Click();
@@ -101,7 +87,7 @@ namespace MelonTestAutomation.StepDefinitions
         public void ThenTheSearchListIsDisplayed(string expectedSearchItem)
         {
             Uri currentUrl = new Uri(_context.Driver.Url);
-            urlPageParam = HttpUtility.ParseQueryString(currentUrl.Query).Get("s");
+            urlPageParam = HttpUtility.ParseQueryString(currentUrl.Query).Get("q");
 
             Assert.AreEqual(expectedSearchItem, urlPageParam, "The url search item parameter value is not correct.");
         }
@@ -111,14 +97,14 @@ namespace MelonTestAutomation.StepDefinitions
         public void ThenPageIsLoaded(string expectedPage)
         {
             Uri currentUrl = new Uri(_context.Driver.Url);
-            urlPageParam = HttpUtility.ParseQueryString(currentUrl.Query).Get("f");
+            urlPageParam = HttpUtility.ParseQueryString(currentUrl.Query).Get("page");
 
             selectedPage = _context.SearchPage.SelectedPage.Text;
 
             Assert.Multiple(() =>
             {
                 Assert.AreEqual(expectedPage, selectedPage, "Incorrect page is loaded.");
-                Assert.AreEqual(int.Parse(expectedPage) - 1, int.Parse(urlPageParam), "The url page parameter value is not correct.");
+                Assert.AreEqual(int.Parse(expectedPage), int.Parse(urlPageParam), "The url page parameter value is not correct.");
             });
         }
 

@@ -3,6 +3,7 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using System;
 using System.Linq;
+using System.Web;
 using TechTalk.SpecFlow;
 
 namespace MelonTestAutomation.StepDefinitions
@@ -12,11 +13,11 @@ namespace MelonTestAutomation.StepDefinitions
     {
         #region Local Variables, Before and After scenario
         private WebDriverContext _context;
-        private string categoryName;
-        private string categoryLink;
         private string url;
-        private string brandFilter;
-        private string colourFilter;
+        string categoryLink;
+        string currentCategoryName;
+        private string brandFilterName;
+        private string colourFilterName;
 
         public FiltersSteps(WebDriverContext context)
         {
@@ -36,40 +37,10 @@ namespace MelonTestAutomation.StepDefinitions
             switch (domain)
             {
                 case "de":
-                    url = "https://de.myworld.com/";
+                    url = "https://www.marketplace.myworld.com/de";
                     break;
-                case "at":
-                    url = "https://at.myworld.com/";
-                    break;
-                case "ch":
-                    url = "https://ch.myworld.com/";
-                    break;
-                case "it":
-                    url = "https://it.myworld.com/";
-                    break;
-                case "hu":
-                    url = "https://hu.myworld.com/";
-                    break;
-                case "cz":
-                    url = "https://cz.myworld.com/";
-                    break;
-                case "sk":
-                    url = "https://sk.myworld.com/";
-                    break;
-                case "si":
-                    url = "https://si.myworld.com/";
-                    break;
-                case "se":
-                    url = "https://se.myworld.com/";
-                    break;
-                case "pl":
-                    url = "https://pl.myworld.com/";
-                    break;
-                case "no":
-                    url = "https://no.myworld.com/";
-                    break;
-                case "pt":
-                    url = "https://pt.myworld.com/";
+                case "en":
+                    url = "https://www.marketplace.myworld.com/en";
                     break;
                 default:
                     break;
@@ -77,47 +48,19 @@ namespace MelonTestAutomation.StepDefinitions
 
             _context.Driver.Navigate().GoToUrl(url);
             _context.Driver.Manage().Window.Maximize();
-            _context.HomePage.CookieButton.Click();
+            _context.HomePage.AcceptCookiesButton.Click();
         }
 
-        [When("I choose (.*) from the (.*) level category tree")]
-        public void WhenIChooseFromTheLevelCategoryTree(string categoryName, string levelNumber)
-        {
-            IWebElement category;
-
-            switch (levelNumber)
+        [When(@"I open (.*) category")]
+        public void WhenIOpenCategory(string categoryName)
+        {            
+            switch (categoryName)
             {
-                case "First":
-                    if (categoryName == "DIY & Garden")
-                    {
-                        category = _context.HomePage.CategoryTreeList("1").Where(c => c.GetAttribute("data-id") == "HJ1RB5E4NB").FirstOrDefault();
-                        category.Click();
-                    }
-                    break;
-                case "Second":
-                    if (categoryName == "Do It Yourself (DIY)")
-                    {
-                        category = _context.HomePage.CategoryTreeList("2").Where(c => c.GetAttribute("data-id") == "SD0DTMVMR3").FirstOrDefault();
-                        category.Click();
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        [When("I press (.*) link from the (.*) level category tree")]
-        public void WhenIPressLink(string categoryTreeTitle, string levelNumber)
-        {
-            switch (levelNumber)
-            {
-                case "Third":
-                    if (categoryTreeTitle == "Do It Yourself (DIY)")
-                    {
-                        categoryName = _context.HomePage.CategoryTreeTitle("headerCategoriesTreeLevelThree").GetAttribute("text");
-                        categoryLink = _context.HomePage.CategoryTreeTitle("headerCategoriesTreeLevelThree").GetAttribute("href");
-                        _context.HomePage.CategoryTreeTitle("headerCategoriesTreeLevelThree").Click();
-                    }
+                case "Home % Garden":
+                    IWebElement category = _context.HomePage.CategoriesList[5];
+                    categoryLink = category.GetAttribute("href");
+                    currentCategoryName = category.Text;
+                    category.Click();
                     break;
                 default:
                     break;
@@ -131,7 +74,7 @@ namespace MelonTestAutomation.StepDefinitions
             {
                 case "priceAscending":
                     _context.ProductsPage.SortProductsBy.Click();
-                    _context.ProductsPage.SortProductsOptions.Where(o => o.GetAttribute("value") == "cheapest").FirstOrDefault().Click();
+                    _context.ProductsPage.SortProductsByPriceAsc.Click();
                     break;
                 default:
                     break;
@@ -144,39 +87,17 @@ namespace MelonTestAutomation.StepDefinitions
             switch (filterType)
             {
                 case "Brand":
-                    _context.ProductsPage.FilterFromShowMoreButton.Click();
-                    _context.ProductsPage.FilterFrom[0].Click();
-                    brandFilter = _context.ProductsPage.FilterFrom[0].Text;
+                    _context.ProductsPage.FilterBrandDropDown.Click();
+                    _context.ProductsPage.BrandsFilter[0].Click();
+                    brandFilterName = _context.ProductsPage.BrandsFilter[0].Text.Split('\r').FirstOrDefault();
+                    _context.ProductsPage.ApplyFilterButton.Click();
                     break;
                 case "Colour":
-                    _context.ProductsPage.FilterColourShowMoreButton.Click();
-                    _context.ProductsPage.FilterColour[0].Click();
-                    colourFilter = _context.ProductsPage.FilterColour[0].Text;
-                    break;
-                default:
-                    break;
-            }
-        }
+                    _context.ProductsPage.FilterColourDropDown.Click();
+                    _context.ProductsPage.ColoursFilter[0].Click();
+                    colourFilterName = _context.ProductsPage.ColoursFilter[0].Text;
+                    _context.ProductsPage.ApplyFilterButton.Click();
 
-        [Then("(.*) level category tree is displayed")]
-        public void ThenLevelCategoryTreeIsDisplayed(string levelNumber)
-        {
-            switch (levelNumber)
-            {
-                case "First":
-                    bool isFirstLevelCategoryTreeDisplayed = _context.HomePage.CategoryTreeTitle("headerCategoriesTreeLevelOne").Displayed;
-
-                    Assert.IsTrue(isFirstLevelCategoryTreeDisplayed, "First level category tree is not displayed.");
-                    break;
-                case "Second":
-                    bool isSecondLevelCategoryTreeDisplayed = _context.HomePage.CategoryTreeTitle("headerCategoriesTreeLevelTwo").Displayed;
-
-                    Assert.IsTrue(isSecondLevelCategoryTreeDisplayed, "First level category tree is not displayed.");
-                    break;
-                case "Third":
-                    bool isThirdLevelCategoryTreeDisplayed = _context.HomePage.CategoryTreeTitle("headerCategoriesTreeLevelThree").Displayed;
-
-                    Assert.IsTrue(isThirdLevelCategoryTreeDisplayed, "First level category tree is not displayed.");
                     break;
                 default:
                     break;
@@ -191,7 +112,7 @@ namespace MelonTestAutomation.StepDefinitions
 
             Assert.Multiple(() =>
             {
-                Assert.AreEqual(categoryName, currentPageCategoryName, "Correct page is loaded");
+                Assert.AreEqual(currentCategoryName, currentPageCategoryName, "Correct page is loaded");
                 Assert.AreEqual(categoryLink, currentUrl, "Correct page is loaded");
             });
         }
@@ -201,23 +122,20 @@ namespace MelonTestAutomation.StepDefinitions
         {
             Uri currentUrl;
             string urlDirectory;
-            bool isURLContainsFilter;
 
             switch (filterType)
             {
                 case "Brand":
                     currentUrl = new Uri(_context.Driver.Url);
-                    urlDirectory = currentUrl.Segments.LastOrDefault();
-                    isURLContainsFilter = urlDirectory.Contains(brandFilter);
+                    urlDirectory = HttpUtility.ParseQueryString(currentUrl.Query).Get("brand[]");
 
-                    Assert.IsTrue(isURLContainsFilter);
+                    Assert.AreEqual(brandFilterName, urlDirectory, "Wrong brand filter!");
                     break;
                 case "Colour":
                     currentUrl = new Uri(_context.Driver.Url);
-                    urlDirectory = currentUrl.Segments.LastOrDefault();
-                    isURLContainsFilter = urlDirectory.Contains(colourFilter);
+                    urlDirectory = HttpUtility.ParseQueryString(currentUrl.Query).Get("color[]");
 
-                    Assert.IsTrue(isURLContainsFilter, "The filter is not the expected one.");
+                    Assert.AreEqual(colourFilterName, urlDirectory, "Wrong color filter!");
                     break;
                 default:
                     break;

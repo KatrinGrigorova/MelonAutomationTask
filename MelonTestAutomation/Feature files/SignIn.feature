@@ -5,39 +5,29 @@ Feature: SignIn
 	I want to log into myworld successfully
 
 Scenario Outline: Sign in with valid account
-	Given I am on page <page>
-	When I press MyAccount
-	Then The Sign In page is loaded
-	When I fill <email> and <password> with <account_type>
-	And I press Login button in <account_type> SignIn form
-	Then I am logged with my <account_type> account
+	Given I am on page homePage
+	When I go to User Account and press Cashback button
+	When I fill <email> and <password>
+	And I click Login button
+	Then I am logged in
 
 	Examples:
-		| email               | password    | account_type | page     |
-		| waldenschmid@abv.bg | walden666   | myworld      | homePage |
-		| anabern@abv.bg      | anaCa$hback | cashback     | homePage |
+		| email          | password    |
+		| anabern@abv.bg | anaCa$hback |
 
 @signinFromAnyPage
 Scenario Outline: Successful login starts and ends on the same page
 	Given I am on page <page>
-	When I press MyAccount
-	Then The Sign In page is loaded
-	When I fill <email> and <password> with <account_type>
-	And I press Login button in <account_type> SignIn form
-	Then I am logged with my <account_type> account
+	When I go to User Account and press Cashback button
+	When I fill <email> and <password>
+	And I click Login button
+	Then I am logged in
 	And I am on page <page>
 
 	Examples:
-		| email               | password    | account_type | page                     |
-		| waldenschmid@abv.bg | walden666   | myworld      | homePage                 |
-		| waldenschmid@abv.bg | walden666   | myworld      | categoriesPage           |
-		| waldenschmid@abv.bg | walden666   | myworld      | randomCategoryPage       |
-		| waldenschmid@abv.bg | walden666   | myworld      | shoppingCartPage         |
-		| waldenschmid@abv.bg | walden666   | myworld      | randomProductDetailsPage |
-		| waldenschmid@abv.bg | walden666   | myworld      | checkout                 |
-		| anabern@abv.bg      | anaCa$hback | cashback     | homePage                 |
-		| anabern@abv.bg      | anaCa$hback | cashback     | categoriesPage           |
-		| anabern@abv.bg      | anaCa$hback | cashback     | randomCategoryPage       |
-		| anabern@abv.bg      | anaCa$hback | cashback     | shoppingCartPage         |
-		| anabern@abv.bg      | anaCa$hback | cashback     | randomProductDetailsPage |
-		| anabern@abv.bg      | anaCa$hback | cashback     | checkout                 |
+		| email          | password    | page                     |
+		| anabern@abv.bg | anaCa$hback | homePage                 |
+		| anabern@abv.bg | anaCa$hback | randomCategoryPage       |
+		| anabern@abv.bg | anaCa$hback | shoppingCartPage         |
+		| anabern@abv.bg | anaCa$hback | randomProductDetailsPage |
+		| anabern@abv.bg | anaCa$hback | checkout                 |

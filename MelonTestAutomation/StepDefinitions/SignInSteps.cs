@@ -1,6 +1,7 @@
 ﻿using MelonTestAutomation.Drivers;
 using NUnit.Framework;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +34,7 @@ namespace MelonTestAutomation.StepDefinitions
         {
             _context.Driver.Navigate().GoToUrl(url);
             _context.Driver.Manage().Window.Maximize();
-            _context.HomePage.CookieButton.Click();
+            _context.HomePage.AcceptCookiesButton.Click();
             DeleteProductsFromShoppingCart();
         }
 
@@ -55,22 +56,14 @@ namespace MelonTestAutomation.StepDefinitions
                 case "homePage":
                     url = _context.Driver.Url;
                     break;
-                case "categoriesPage":
-                    getCategoriesSteps.WhenIPressAllCategoriesDropdownMenu();
-                    getCategoriesSteps.WhenIPressAllCategoriesTitle();
-
-                    url = _context.Driver.Url;
-                    break;
                 case "randomCategoryPage":
-                    getCategoriesSteps.WhenIPressAllCategoriesDropdownMenu();
-                    getCategoriesSteps.WhenIPressAllCategoriesTitle();
+                    getCategoriesSteps.WhenIClickAllCategoriesDropdownMenu();
                     getCategoriesSteps.WhenIOpenRandomCategory();
                     break;
                 case "shoppingCartPage":
-                    getCategoriesSteps.WhenIPressAllCategoriesDropdownMenu();
-                    getCategoriesSteps.WhenIPressAllCategoriesTitle();
+                    getCategoriesSteps.WhenIClickAllCategoriesDropdownMenu();
                     getCategoriesSteps.WhenIOpenRandomCategory();
-                    getCategoriesSteps.WhenIAddMultipleRandomAvailableProductsToTheShoppingCart(1, "1");
+                    getCategoriesSteps.WhenIAddMultipleRandomAvailableProductsToTheShoppingCart(1);
                     getCategoriesSteps.WhenIGoToTheShoppingCart();
                     break;
                 case "randomProductDetailsPage":
@@ -79,10 +72,9 @@ namespace MelonTestAutomation.StepDefinitions
                     url = _context.Driver.Url;
                     break;
                 case "checkout":
-                    getCategoriesSteps.WhenIPressAllCategoriesDropdownMenu();
-                    getCategoriesSteps.WhenIPressAllCategoriesTitle();
+                    getCategoriesSteps.WhenIClickAllCategoriesDropdownMenu();
                     getCategoriesSteps.WhenIOpenRandomCategory();
-                    getCategoriesSteps.WhenIAddMultipleRandomAvailableProductsToTheShoppingCart(1, "1");
+                    getCategoriesSteps.WhenIAddMultipleRandomAvailableProductsToTheShoppingCart(1);
                     getCategoriesSteps.WhenIGoToTheShoppingCart();
                     _context.ShoppingCartPage.ShoppingCartCheckoutButton.Click();
                     break;
@@ -91,48 +83,28 @@ namespace MelonTestAutomation.StepDefinitions
             }
         }
 
-        [When(@"I press MyAccount")]
-        public void WhenIPressMyAccount()
+        [When(@"I go to User Account and press Cashback button")]
+        public void WhenIGoToUserAccountAndPressCashbackButton()
         {
             if (currentPage != "checkout")
             {
-                _context.HomePage.MyAccountNotLoggedIn.Click();
+                Actions action = new Actions(_context.Driver);
+                action.MoveToElement(_context.HomePage.UserAccountIconLoggedOut).Perform();
+                _context.HomePage.CashBackLoginButton.Click();
             }
         }
 
-        [When("I fill (.*) and (.*) with (.*)")]
-        public void WhenIFillTheCredentialFields(string email, string password, string accountType)
+        [When("I fill (.*) and (.*)")]
+        public void WhenIFillTheCredentialFields(string email, string password)
         {
-            switch (accountType)
-            {
-                case "myworld":
-                    _context.MyworldSigninPage.LoginInputEmail.SendKeys(email);
-                    _context.MyworldSigninPage.LoginInputPassword.SendKeys(password);
-                    break;
-                case "cashback":
-                    _context.MyworldSigninPage.LoginCashBackSubmitButton.Click();
-                    _context.CashbackSigninPage.LoginInputEmail.SendKeys(email);
-                    _context.CashbackSigninPage.LoginInputPassword.SendKeys(password);
-                    break;
-                default:
-                    break;
-            }
+            _context.CashbackSigninPage.LoginInputEmail.SendKeys(email);
+            _context.CashbackSigninPage.LoginInputPassword.SendKeys(password);
         }
 
-        [When("I press Login button in (.*) SignIn form")]
-        public void WhenIPressLoginButton(string accountType)
+        [When("I click Login button")]
+        public void WhenIClickLoginButton()
         {
-            switch (accountType)
-            {
-                case "myworld":
-                    _context.MyworldSigninPage.LoginSubmitButton.Click();
-                    break;
-                case "cashback":
-                    _context.CashbackSigninPage.LoginSubmitButton.Click();
-                    break;
-                default:
-                    break;
-            }
+            _context.CashbackSigninPage.LoginSubmitButton.Click();
         }
 
         [Then(@"The Sign In page is loaded")]
@@ -144,52 +116,25 @@ namespace MelonTestAutomation.StepDefinitions
             Assert.AreEqual("signin", urlDirectory, "Wrong page is loaded.");
         }
 
-        [Then("I am logged with my (.*) account")]
-        public void ThenIAmLoggedWithAccount(string accountType)
+        [Then("I am logged in")]
+        public void ThenIAmLoggedIn()
         {
-            if (currentPage != "checkout")
+            Actions action = new Actions(_context.Driver);
+            action.MoveToElement(_context.HomePage.UserAccountIconLoggedIn).Perform();
+
+            bool isLoggedIn = _context.HomePage.LogoutButton.Displayed;
+
+            if (_scenarioContext.ScenarioInfo.Tags.Contains("shoppingCart"))
             {
-                bool isLoggedIn;
-                bool isCashBackIconDisplayed;
-
-                switch (accountType)
+                Assert.Multiple(() =>
                 {
-                    case "myworld":
-                        isLoggedIn = _context.HomePage.MyAccountLoggedIn.Displayed;
-                        isCashBackIconDisplayed = _context.HomePage.MyAccountCashbackIcon == null;
-
-                        Assert.Multiple(() =>
-                        {
-                            Assert.IsTrue(isLoggedIn, "I am not logged in.");
-                            Assert.IsTrue(isCashBackIconDisplayed, "The cashback icon appears, but it shouldn't.");
-                        });
-                        break;
-                    case "cashback":
-                        isLoggedIn = _context.HomePage.MyAccountLoggedIn.Displayed;
-                        isCashBackIconDisplayed = _context.HomePage.MyAccountCashbackIcon == null;
-
-                        if (_scenarioContext.ScenarioInfo.Tags.Contains("shoppingCart"))
-                        {
-                            Assert.Multiple(() =>
-                            {
-                                Assert.AreEqual(url, _context.Driver.Url, "I am not redirected back to myworld.");
-                                Assert.IsTrue(isLoggedIn, "I am not logged in.");
-                                Assert.IsFalse(isCashBackIconDisplayed, "I am not logged in with my cashback account.");
-                            });
-                        }
-                        else
-                        {
-                            Assert.Multiple(() =>
-                            {
-                                Assert.IsTrue(isLoggedIn, "I am not logged in.");
-                                Assert.IsFalse(isCashBackIconDisplayed, "I am not logged in with my cashback account.");
-                            });
-                        }
-
-                        break;
-                    default:
-                        break;
-                }
+                    Assert.AreEqual(url, _context.Driver.Url, "I am not redirected back to myworld.");
+                    Assert.IsTrue(isLoggedIn, "I am not logged in.");
+                });
+            }
+            else
+            {
+                Assert.IsTrue(isLoggedIn, "I am not logged in.");
             }
         }
 
@@ -207,12 +152,6 @@ namespace MelonTestAutomation.StepDefinitions
 
                     Assert.AreEqual(url, currentUrlString, "Wrong page is loaded.");
                     break;
-                case "categoriesPage":
-                    currentUrl = new Uri(_context.Driver.Url);
-                    urlDirectory = currentUrl.Segments.LastOrDefault();
-
-                    Assert.AreEqual("categories", urlDirectory, "Wrong page is loaded.");
-                    break;
                 case "randomCategoryPage":
                     currentUrlString = _context.Driver.Url;
 
@@ -223,6 +162,8 @@ namespace MelonTestAutomation.StepDefinitions
 
                     currentUrl = new Uri(_context.Driver.Url);
                     urlDirectory = currentUrl.Segments.LastOrDefault();
+
+                    DeleteProductsFromShoppingCart();
 
                     Assert.Multiple(() =>
                     {
@@ -237,10 +178,30 @@ namespace MelonTestAutomation.StepDefinitions
                     Assert.AreEqual(url, currentUrlString, "Wrong page is loaded.");
                     break;
                 case "checkout":
-                    currentUrl = new Uri(_context.Driver.Url);
-                    urlDirectory = currentUrl.Segments.LastOrDefault();
+                    if (_scenarioContext.ScenarioInfo.Tags.Contains("signinFromAnyPage"))
+                    {
+                        currentUrl = new Uri(_context.Driver.Url);
+                        urlDirectory = currentUrl.Segments.LastOrDefault();
 
-                    Assert.AreEqual("address", urlDirectory, "Wrong page is loaded.");
+                        DeleteProductsFromShoppingCart();
+
+                        Assert.AreEqual("cart", urlDirectory, "Wrong page is loaded.");
+                    }
+                    else
+                    {
+                        currentUrl = new Uri(_context.Driver.Url);
+                        urlDirectory = currentUrl.Segments.LastOrDefault();
+
+                        //DeleteProductsFromShoppingCart();
+
+                        Assert.AreEqual("address", urlDirectory, "Wrong page is loaded.");
+                    }
+                    break;
+                case "customerAddresses":
+                    currentUrl = new Uri(_context.Driver.Url);
+                    urlDirectory = currentUrl.AbsolutePath; 
+
+                    Assert.True(urlDirectory.Contains("customer/address"), "Wrong page is loaded.");
                     break;
                 default:
                     break;
@@ -251,43 +212,57 @@ namespace MelonTestAutomation.StepDefinitions
         #region Internal methods
         public void DeleteProductsFromShoppingCart()
         {
-            List<IWebElement> removeItemsList;
+            Actions action = new Actions(_context.Driver);
+            action.MoveToElement(_context.HomePage.MyWorldMainLogo).Perform();
 
             _context.HomePage.MyWorldMainLogo.Click();
-            _context.HomePage.ShoppingCartIcon.Click();
 
-            removeItemsList = _context.HomePage.RemoveItemFromTheCart.ToList();
+            var shoppingCartQuantity = _context.HomePage.ShoppingCartQuantity.Text;
 
-            while (removeItemsList.Count() > 0)
+            if (shoppingCartQuantity != "")
             {
-                removeItemsList[0].Click();
-                Thread.Sleep(1000);
-                var shoppingCartQuantity = _context.HomePage.ShoppingCartIcon.FindElement(By.XPath("//span[@data-qa='cartPopupItemsQty']")).Text;
+                List<IWebElement> removeItemsList;
 
-                if (shoppingCartQuantity != "")
+                _context.HomePage.ShoppingCartIcon.Click();
+
+                removeItemsList = _context.HomePage.RemoveItemFromTheCart.ToList();
+
+                while (removeItemsList.Count() > 0)
                 {
-                    removeItemsList = _context.HomePage.RemoveItemFromTheCart.ToList();
-                }
-                else
-                {
-                    break;
+                    removeItemsList[0].Click();
+                    Thread.Sleep(1000);
+
+                    shoppingCartQuantity = _context.HomePage.ShoppingCartQuantity.Text;
+
+                    if (shoppingCartQuantity != "")
+                    {
+                        removeItemsList = _context.HomePage.RemoveItemFromTheCart.ToList();
+                    }
+                    else
+                    {
+                        break;
+                    }
                 }
             }
         }
 
         public void OpenRandomProductDetails()
         {
-            getCategoriesSteps.WhenIPressAllCategoriesDropdownMenu();
-            getCategoriesSteps.WhenIPressAllCategoriesTitle();
+            getCategoriesSteps.WhenIClickAllCategoriesDropdownMenu();
             getCategoriesSteps.WhenIOpenRandomCategory();
 
-            int randomProduct = Enumerable.Range(1, _context.ProductsPage.CategoryProductList.ToList().Count).OrderBy(o => (new Random()).Next()).Take(1).FirstOrDefault();
+            _context.ProductsPage.BenefitStoreFilter.Click();
+            _context.ProductsPage.BenefitStoreFilterTrue.Click();
+            _context.ProductsPage.ApplyFilterButton.Click();
 
-            IWebElement product = _context.ProductsPage.CategoryProductList[randomProduct - 1];
+            int randomProduct = Enumerable.Range(1, _context.ProductsPage.CategoryProductsList.ToList().Count).OrderBy(o => (new Random()).Next()).Take(1).FirstOrDefault();
+
+            IWebElement product = _context.ProductsPage.CategoryProductsList[randomProduct - 1];
 
             string productName = product.GetAttribute("text").Trim();
 
             _context.HomePage.ScrollToElement(product);
+            Thread.Sleep(1000);
             product.Click();
         }
         #endregion

@@ -79,16 +79,13 @@ namespace MelonTestAutomation.FeatureFiles
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Sign in with valid account")]
-        [NUnit.Framework.TestCaseAttribute("waldenschmid@abv.bg", "walden666", "myworld", "homePage", null)]
-        [NUnit.Framework.TestCaseAttribute("anabern@abv.bg", "anaCa$hback", "cashback", "homePage", null)]
-        public virtual void SignInWithValidAccount(string email, string password, string account_Type, string page, string[] exampleTags)
+        [NUnit.Framework.TestCaseAttribute("anabern@abv.bg", "anaCa$hback", null)]
+        public virtual void SignInWithValidAccount(string email, string password, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("email", email);
             argumentsOfScenario.Add("password", password);
-            argumentsOfScenario.Add("account_type", account_Type);
-            argumentsOfScenario.Add("page", page);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Sign in with valid account", null, tagsOfScenario, argumentsOfScenario);
 #line 7
 this.ScenarioInitialize(scenarioInfo);
@@ -111,22 +108,19 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 8
- testRunner.Given(string.Format("I am on page {0}", page), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I am on page homePage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 9
- testRunner.When("I press MyAccount", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I go to User Account and press Cashback button", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 10
- testRunner.Then("The Sign In page is loaded", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.When(string.Format("I fill {0} and {1}", email, password), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 11
- testRunner.When(string.Format("I fill {0} and {1} with {2}", email, password, account_Type), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.And("I click Login button", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 12
- testRunner.And(string.Format("I press Login button in {0} SignIn form", account_Type), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 13
- testRunner.Then(string.Format("I am logged with my {0} account", account_Type), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("I am logged in", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -135,19 +129,12 @@ this.ScenarioInitialize(scenarioInfo);
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Successful login starts and ends on the same page")]
         [NUnit.Framework.CategoryAttribute("signinFromAnyPage")]
-        [NUnit.Framework.TestCaseAttribute("waldenschmid@abv.bg", "walden666", "myworld", "homePage", null)]
-        [NUnit.Framework.TestCaseAttribute("waldenschmid@abv.bg", "walden666", "myworld", "categoriesPage", null)]
-        [NUnit.Framework.TestCaseAttribute("waldenschmid@abv.bg", "walden666", "myworld", "randomCategoryPage", null)]
-        [NUnit.Framework.TestCaseAttribute("waldenschmid@abv.bg", "walden666", "myworld", "shoppingCartPage", null)]
-        [NUnit.Framework.TestCaseAttribute("waldenschmid@abv.bg", "walden666", "myworld", "randomProductDetailsPage", null)]
-        [NUnit.Framework.TestCaseAttribute("waldenschmid@abv.bg", "walden666", "myworld", "checkout", null)]
-        [NUnit.Framework.TestCaseAttribute("anabern@abv.bg", "anaCa$hback", "cashback", "homePage", null)]
-        [NUnit.Framework.TestCaseAttribute("anabern@abv.bg", "anaCa$hback", "cashback", "categoriesPage", null)]
-        [NUnit.Framework.TestCaseAttribute("anabern@abv.bg", "anaCa$hback", "cashback", "randomCategoryPage", null)]
-        [NUnit.Framework.TestCaseAttribute("anabern@abv.bg", "anaCa$hback", "cashback", "shoppingCartPage", null)]
-        [NUnit.Framework.TestCaseAttribute("anabern@abv.bg", "anaCa$hback", "cashback", "randomProductDetailsPage", null)]
-        [NUnit.Framework.TestCaseAttribute("anabern@abv.bg", "anaCa$hback", "cashback", "checkout", null)]
-        public virtual void SuccessfulLoginStartsAndEndsOnTheSamePage(string email, string password, string account_Type, string page, string[] exampleTags)
+        [NUnit.Framework.TestCaseAttribute("anabern@abv.bg", "anaCa$hback", "homePage", null)]
+        [NUnit.Framework.TestCaseAttribute("anabern@abv.bg", "anaCa$hback", "randomCategoryPage", null)]
+        [NUnit.Framework.TestCaseAttribute("anabern@abv.bg", "anaCa$hback", "shoppingCartPage", null)]
+        [NUnit.Framework.TestCaseAttribute("anabern@abv.bg", "anaCa$hback", "randomProductDetailsPage", null)]
+        [NUnit.Framework.TestCaseAttribute("anabern@abv.bg", "anaCa$hback", "checkout", null)]
+        public virtual void SuccessfulLoginStartsAndEndsOnTheSamePage(string email, string password, string page, string[] exampleTags)
         {
             string[] @__tags = new string[] {
                     "signinFromAnyPage"};
@@ -159,10 +146,9 @@ this.ScenarioInitialize(scenarioInfo);
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("email", email);
             argumentsOfScenario.Add("password", password);
-            argumentsOfScenario.Add("account_type", account_Type);
             argumentsOfScenario.Add("page", page);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Successful login starts and ends on the same page", null, tagsOfScenario, argumentsOfScenario);
-#line 21
+#line 19
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -182,25 +168,22 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 22
+#line 20
  testRunner.Given(string.Format("I am on page {0}", page), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
+#line 21
+ testRunner.When("I go to User Account and press Cashback button", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 22
+ testRunner.When(string.Format("I fill {0} and {1}", email, password), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
 #line 23
- testRunner.When("I press MyAccount", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.And("I click Login button", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 24
- testRunner.Then("The Sign In page is loaded", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("I am logged in", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
 #line 25
- testRunner.When(string.Format("I fill {0} and {1} with {2}", email, password, account_Type), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 26
- testRunner.And(string.Format("I press Login button in {0} SignIn form", account_Type), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 27
- testRunner.Then(string.Format("I am logged with my {0} account", account_Type), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-#line 28
  testRunner.And(string.Format("I am on page {0}", page), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }

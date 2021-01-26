@@ -5,15 +5,10 @@ Feature: Filters
 	I want to be able to apply filters correctly
 
 @thirdLevelCategoryTree
-Scenario Outline: Choose category from third level category tree and apply filters on the Catalog page
+Scenario Outline: Choose category and apply filters on the Catalog page
 	Given I am on domain <domain> Home page
-	When I press All categories dropdown menu
-	Then First level category tree is displayed
-	When I choose DIY & Garden from the First level category tree
-	Then Second level category tree is displayed
-	When I choose Do It Yourself (DIY) from the Second level category tree
-	Then Third level category tree is displayed
-	When I press Do It Yourself (DIY) link from the Third level category tree
+	When I click All categories dropdown menu
+	And I open Home % Garden category
 	Then Correct page is loaded
 	When I sort by <sortBy>
 	And I apply Brand filter
@@ -24,14 +19,4 @@ Scenario Outline: Choose category from third level category tree and apply filte
 	Examples:
 		| domain | sortBy         |
 		| de     | priceAscending |
-		| at     | priceAscending |
-		| ch     | priceAscending |
-		| it     | priceAscending |
-		| hu     | priceAscending |
-		| cz     | priceAscending |
-		| sk     | priceAscending |
-		| si     | priceAscending |
-		| se     | priceAscending |
-		| pl     | priceAscending |
-		| no     | priceAscending |
-		| pt     | priceAscending |
+		| en     | priceAscending |

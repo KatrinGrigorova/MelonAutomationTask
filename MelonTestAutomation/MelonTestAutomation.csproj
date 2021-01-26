@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <Compile Remove="CatalogPageTests.cs" />
+    <Compile Remove="Pages\MyworldSigninPage.cs" />
     <Compile Remove="ShoppingCartTests.cs" />
   </ItemGroup>
 
@@ -19,9 +20,9 @@
     <PackageReference Include="NUnit" Version="3.12.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
     <PackageReference Include="Selenium.WebDriver" Version="3.141.0" />
-    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="85.0.4183.8700" />
-    <PackageReference Include="Selenium.WebDriver.GeckoDriver" Version="0.27.0" />
-    <PackageReference Include="Selenium.WebDriver.MSEdgeDriver" Version="85.0.564.41" />
+    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="87.0.4280.8800" />
+    <PackageReference Include="Selenium.WebDriver.GeckoDriver" Version="0.28.0" />
+    <PackageReference Include="Selenium.WebDriver.MSEdgeDriver" Version="87.0.669" />
     <PackageReference Include="SpecFlow" Version="3.4.31" />
     <PackageReference Include="SpecFlow.NUnit" Version="3.4.31" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />

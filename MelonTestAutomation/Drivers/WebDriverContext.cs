@@ -1,5 +1,4 @@
 ﻿using MelonTestAutomation.Pages;
-using MelonTestAutomation.StepDefinitions;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
@@ -14,8 +13,9 @@ namespace MelonTestAutomation.Drivers
         private ProductDetailsPage productDetailsPage;
         private SearchPage searchPage;
         private ShoppingCartPage shoppingCartPage;
-        private MyworldSigninPage myworldSigninPage;
+        //private MyworldSigninPage myworldSigninPage;
         private CashbackSigninPage cashbackSigninPage;
+        private CustomerAddressesPage customerAddressesPage;
 
         public WebDriverContext()
         {
@@ -26,9 +26,9 @@ namespace MelonTestAutomation.Drivers
             searchPage = new SearchPage(_driver);
             shoppingCartPage = new ShoppingCartPage(_driver);
             checkoutAddressesPage = new CheckoutAddressesPage(_driver);
-            myworldSigninPage = new MyworldSigninPage(_driver);
+            //myworldSigninPage = new MyworldSigninPage(_driver);
             cashbackSigninPage = new CashbackSigninPage(_driver);
-
+            customerAddressesPage = new CustomerAddressesPage(_driver);
         }
 
         public IWebDriver Driver => _driver;
@@ -45,8 +45,10 @@ namespace MelonTestAutomation.Drivers
 
         public CheckoutAddressesPage CheckoutAddressesPage => checkoutAddressesPage;
 
-        public MyworldSigninPage MyworldSigninPage => myworldSigninPage;
+        //public MyworldSigninPage MyworldSigninPage => myworldSigninPage;
 
         public CashbackSigninPage CashbackSigninPage => cashbackSigninPage;
+
+        public CustomerAddressesPage CustomerAddressesPage => customerAddressesPage;
     }
 }

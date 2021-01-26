@@ -1,11 +1,11 @@
 ﻿using MelonTestAutomation.Drivers;
-using MelonTestAutomation.Pages;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Interactions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using TechTalk.SpecFlow;
 
 namespace MelonTestAutomation.StepDefinitions
@@ -17,6 +17,7 @@ namespace MelonTestAutomation.StepDefinitions
         private string categoryLink;
         private List<string> productList;
         private readonly WebDriverContext _context;
+        private List<decimal> productsAmount;
 
         public string CategoryLink => categoryLink;
         public List<string> ProductList => productList;
@@ -33,7 +34,7 @@ namespace MelonTestAutomation.StepDefinitions
         {
             _context.Driver.Navigate().GoToUrl(url);
             _context.Driver.Manage().Window.Maximize();
-            _context.HomePage.CookieButton.Click();
+            _context.HomePage.AcceptCookiesButton.Click();
         }
 
         [AfterScenario("@shoppingCart")]
@@ -43,55 +44,74 @@ namespace MelonTestAutomation.StepDefinitions
         }
         #endregion
 
-        [When(@"I press All categories dropdown menu")]
-        public void WhenIPressAllCategoriesDropdownMenu()
+        [When(@"I click All categories dropdown menu")]
+        public void WhenIClickAllCategoriesDropdownMenu()
         {
+            Actions action = new Actions(_context.Driver);
+            action.MoveToElement(_context.HomePage.AllCategoriesDropDown).Perform();
             _context.HomePage.AllCategoriesDropDown.Click();
         }
 
-        [When("I press All categories title")]
-        public void WhenIPressAllCategoriesTitle()
-        {
-            _context.HomePage.CategoryTreeTitle("headerCategoriesTreeLevelOne").Click();
-        }
-
-        [When(@"I open random category")]
+        [When(@"I open random category type")]
         public void WhenIOpenRandomCategory()
         {
             Random random = new Random();
 
-            int randomCategory = random.Next(_context.ProductsPage.AllCategoriesPageCategoryNameList.Count);
-            IWebElement category = _context.ProductsPage.AllCategoriesPageCategoryNameList[randomCategory];
+            int randomCategory = random.Next(_context.HomePage.CategoriesList.Count);
+            IWebElement category = _context.HomePage.CategoriesList[randomCategory];
             categoryLink = category.GetAttribute("href");
             _context.HomePage.ScrollToElement(category);
             category.Click();
+
+            bool doesBenefitStoreFilterNotExist = _context.ProductsPage.BenefitStoreFilter == null;
+
+            while (doesBenefitStoreFilterNotExist != false)
+            {
+                _context.HomePage.AllCategoriesDropDown.Click();
+                randomCategory = random.Next(_context.HomePage.CategoriesList.Count);
+                category = _context.HomePage.CategoriesList[randomCategory];
+                categoryLink = category.GetAttribute("href");
+                _context.HomePage.ScrollToElement(category);
+                category.Click();
+
+                doesBenefitStoreFilterNotExist = _context.ProductsPage.BenefitStoreFilter == null;
+            }
         }
 
-        [When(@"I add (.*) random available products to the shopping cart (.*) quantity per product")]
-        public void WhenIAddMultipleRandomAvailableProductsToTheShoppingCart(int productsNumber, string productQuantity)
+        [When(@"I add (.*) random available products to the shopping cart")]
+        public void WhenIAddMultipleRandomAvailableProductsToTheShoppingCart(int productsNumber)
         {
             int shoppingCartQuantity = 0;
             productList = new List<string>();
+            productsAmount = new List<decimal>();
+
+            Thread.Sleep(1000);
+            _context.ProductsPage.BenefitStoreFilter.Click();
+            _context.ProductsPage.BenefitStoreFilterTrue.Click();
+            _context.ProductsPage.ApplyFilterButton.Click();
+
+            string categoryPage = _context.Driver.Url;
 
             while (shoppingCartQuantity < productsNumber)
             {
-                int randomProduct = Enumerable.Range(1, _context.ProductsPage.CategoryProductList.ToList().Count).OrderBy(o => (new Random()).Next()).Take(1).FirstOrDefault();
+                int randomProduct = Enumerable.Range(1, _context.ProductsPage.CategoryProductsList.ToList().Count).OrderBy(o => (new Random()).Next()).Take(1).FirstOrDefault();
 
-                IWebElement product = _context.ProductsPage.CategoryProductList[randomProduct - 1];
+                IWebElement product = _context.ProductsPage.CategoryProductsList[randomProduct - 1];
 
                 string productName = product.GetAttribute("text").Trim();
 
                 _context.HomePage.ScrollToElement(product);
+                Thread.Sleep(2000);
                 product.Click();
 
-                _context.ProductDetailsPage.ProductDetailsQuantityBox.SendKeys(Keys.Control + "a");
-                _context.ProductDetailsPage.ProductDetailsQuantityBox.SendKeys(Keys.Delete);
-                _context.ProductDetailsPage.ProductDetailsQuantityBox.SendKeys(productQuantity);
-
                 bool isAddToCartButtonEnalbed = _context.ProductDetailsPage.AddProductToCartButton.Enabled;
+                Thread.Sleep(1000);
 
                 if (isAddToCartButtonEnalbed == true)
                 {
+                    decimal productAmount = decimal.Parse(_context.ProductDetailsPage.ProductAmount.Text.Trim().Split('€').LastOrDefault());
+                    productsAmount.Add(productAmount);
+
                     _context.ProductDetailsPage.AddProductToCartButton.Click();
 
                     _context.ShoppingCartPage.ShoppingCartItemQuantity((shoppingCartQuantity + 1).ToString());
@@ -104,7 +124,7 @@ namespace MelonTestAutomation.StepDefinitions
 
                 if (shoppingCartQuantity < productsNumber)
                 {
-                    _context.Driver.Navigate().Back();
+                    _context.Driver.Navigate().GoToUrl(categoryPage);
                 }
             }
         }
@@ -112,22 +132,14 @@ namespace MelonTestAutomation.StepDefinitions
         [When(@"I go to the shopping cart")]
         public void WhenIGoToTheShoppingCart()
         {
-            _context.ProductDetailsPage.GoToCartButton.Click();
+            _context.HomePage.ShoppingCartIcon.Click();
         }
 
         [When(@"I increase the product quantity")]
         public void WhenIIncreaseTheProductQuantity()
         {
             _context.ShoppingCartPage.IncreaseItemQuantityButton[0].Click();
-        }
-
-        [Then(@"The page with all categories is loaded")]
-        public void ThenThePageWithAllCategoriesIsLoaded()
-        {
-            Uri currentUrl = new Uri(_context.Driver.Url);
-            string urlDirectory = currentUrl.Segments.LastOrDefault();
-
-            Assert.AreEqual("categories", urlDirectory, "Wrong page is loaded.");
+            Thread.Sleep(1000);
         }
 
         [Then(@"The correct category is loaded")]
@@ -138,70 +150,40 @@ namespace MelonTestAutomation.StepDefinitions
             Assert.AreEqual(categoryLink, currentUrl, "Wrong category is loaded.");
         }
 
-        [Then(@"The correct products are added to the shopping cart")]
-        public void ThenTheCorrectProductsAreAddedToTheShoppingCart()
+        //[Then(@"The correct products are added to the shopping cart")]
+        //public void ThenTheCorrectProductsAreAddedToTheShoppingCart()
+        //{
+        //    List<string> shoppingCartProductNames = _context.ShoppingCartPage.ShoppingCartProductsNames.Select(p => p.Text).ToList();
+
+        //    CollectionAssert.AreEquivalent(productList, shoppingCartProductNames, "The products in the shopping cart don't match the added ones.");
+        //}
+
+
+        [Then(@"The total amount is correct")]
+        public void ThenTheTotalAmountIsCorrect()
         {
-            List<string> shoppingCartProductNames = _context.ShoppingCartPage.ShoppingCartProductsNames.Select(p => p.Text).ToList();
+            List<IWebElement> shoppingCartProductsAmount = _context.ShoppingCartPage.ShoppingCartProductsAmount.ToList();
+            decimal productsSum = shoppingCartProductsAmount.Select(e => decimal.Parse(e.Text.Trim().Split('€').LastOrDefault())).Sum();
+            decimal cartTotalAmount = Decimal.Parse(_context.ShoppingCartPage.ShoppingCartTotalAmount.Text.Split('€').LastOrDefault());
 
-            CollectionAssert.AreEquivalent(productList, shoppingCartProductNames, "The products in the shopping cart don't match the added ones.");
-        }
-
-
-        [Then(@"The total price of each item in the cart and their total sum are correct")]
-        public void ThenTheTotalPriceOfEachItemInTheCartAndTheirTotalSumAreCorrect()
-        {
-            var firstProductCartItem = new
-            {
-                Amount = Decimal.Parse(_context.ShoppingCartPage.CartPageItemPriceList[0].GetAttribute("data-qa-item-price")),
-                Quantity = int.Parse(_context.ShoppingCartPage.CartPageItemPriceList[0].GetAttribute("data-qa-quantity")),
-                TotalAmount = Decimal.Parse(_context.ShoppingCartPage.CartPageItemPriceList[0].GetAttribute("data-qa-total-price"))
-            };
-
-            var secondProductCartItem = new
-            {
-                Amount = Decimal.Parse(_context.ShoppingCartPage.CartPageItemPriceList[1].GetAttribute("data-qa-item-price")),
-                Quantity = int.Parse(_context.ShoppingCartPage.CartPageItemPriceList[1].GetAttribute("data-qa-quantity")),
-                TotalAmount = Decimal.Parse(_context.ShoppingCartPage.CartPageItemPriceList[1].GetAttribute("data-qa-total-price"))
-            };
-
-            var thirdProductCartItem = new
-            {
-                Amount = Decimal.Parse(_context.ShoppingCartPage.CartPageItemPriceList[2].GetAttribute("data-qa-item-price")),
-                Quantity = int.Parse(_context.ShoppingCartPage.CartPageItemPriceList[2].GetAttribute("data-qa-quantity")),
-                TotalAmount = Decimal.Parse(_context.ShoppingCartPage.CartPageItemPriceList[2].GetAttribute("data-qa-total-price"))
-            };
-
-            decimal totalAmount = firstProductCartItem.TotalAmount + secondProductCartItem.TotalAmount + thirdProductCartItem.TotalAmount;
-
-            Assert.Multiple(() =>
-            {
-                Assert.AreEqual(firstProductCartItem.Amount * firstProductCartItem.Quantity, firstProductCartItem.TotalAmount, "The first item total price is not correct.");
-                Assert.AreEqual(secondProductCartItem.Amount * secondProductCartItem.Quantity, secondProductCartItem.TotalAmount, "The second item total price is not correct.");
-                Assert.AreEqual(thirdProductCartItem.Amount * thirdProductCartItem.Quantity, thirdProductCartItem.TotalAmount, "The third item total price is not correct.");
-                Assert.AreEqual(totalAmount, Decimal.Parse(_context.ShoppingCartPage.ShoppingCartTotalAmount.GetAttribute("data-qa-price-total")), "Total amount is not correct.");
-            });
+            Assert.AreEqual(productsSum, cartTotalAmount, "Total amount is not correct.");
         }
 
         [Then(@"The total price of the product is correct")]
         public void ThenTheTotalPriceOfThePdoductIsCorrect()
         {
-            var firstProductCartItem = new
-            {
-                Amount = Decimal.Parse(_context.ShoppingCartPage.CartPageItemPriceList[0].GetAttribute("data-qa-item-price")),
-                Quantity = int.Parse(_context.ShoppingCartPage.CartPageItemPriceList[0].GetAttribute("data-qa-quantity")),
-                TotalAmount = Decimal.Parse(_context.ShoppingCartPage.CartPageItemPriceList[0].GetAttribute("data-qa-total-price"))
-            };
+            decimal increasedProductAmount = decimal.Parse(_context.ShoppingCartPage.ShoppingCartProductsAmount[0].Text.Trim().Split('€').LastOrDefault());
+            var productQuantity = Int32.Parse(_context.ShoppingCartPage.ProductsQuantity[0].GetAttribute("value"));
 
-            var secondProductTotalAmount = Decimal.Parse(_context.ShoppingCartPage.CartPageItemPriceList[1].GetAttribute("data-qa-total-price"));
-            var thirdProductTotalAmount = Decimal.Parse(_context.ShoppingCartPage.CartPageItemPriceList[2].GetAttribute("data-qa-total-price"));
-
-            decimal totalAmount = firstProductCartItem.TotalAmount + secondProductTotalAmount + thirdProductTotalAmount;
+            List<IWebElement> shoppingCartProductsAmount = _context.ShoppingCartPage.ShoppingCartProductsAmount.ToList();
+            decimal productsSum = shoppingCartProductsAmount.Select(e => decimal.Parse(e.Text.Trim().Split('€').LastOrDefault())).Sum();
+            decimal cartTotalAmount = Decimal.Parse(_context.ShoppingCartPage.ShoppingCartTotalAmount.Text.Split('€').LastOrDefault());
 
             Assert.Multiple(() =>
             {
-                Assert.AreEqual(firstProductCartItem.Amount * firstProductCartItem.Quantity, firstProductCartItem.TotalAmount, "The first item total price is not correct.");
-                Assert.AreEqual(totalAmount, Decimal.Parse(_context.ShoppingCartPage.ShoppingCartTotalAmount.GetAttribute("data-qa-price-total")), "Total amount is not correct.");
+                Assert.AreEqual(productsAmount[0] * productQuantity, increasedProductAmount, "The total price of the product is not correct.");
+                Assert.AreEqual(productsSum, cartTotalAmount, "Total amount is not correct.");
             });
-        }       
+        }
     }
 }

@@ -78,22 +78,11 @@ namespace MelonTestAutomation.FeatureFiles
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Choose category from third level category tree and apply filters on the Catalog p" +
-            "age")]
+        [NUnit.Framework.DescriptionAttribute("Choose category and apply filters on the Catalog page")]
         [NUnit.Framework.CategoryAttribute("thirdLevelCategoryTree")]
         [NUnit.Framework.TestCaseAttribute("de", "priceAscending", null)]
-        [NUnit.Framework.TestCaseAttribute("at", "priceAscending", null)]
-        [NUnit.Framework.TestCaseAttribute("ch", "priceAscending", null)]
-        [NUnit.Framework.TestCaseAttribute("it", "priceAscending", null)]
-        [NUnit.Framework.TestCaseAttribute("hu", "priceAscending", null)]
-        [NUnit.Framework.TestCaseAttribute("cz", "priceAscending", null)]
-        [NUnit.Framework.TestCaseAttribute("sk", "priceAscending", null)]
-        [NUnit.Framework.TestCaseAttribute("si", "priceAscending", null)]
-        [NUnit.Framework.TestCaseAttribute("se", "priceAscending", null)]
-        [NUnit.Framework.TestCaseAttribute("pl", "priceAscending", null)]
-        [NUnit.Framework.TestCaseAttribute("no", "priceAscending", null)]
-        [NUnit.Framework.TestCaseAttribute("pt", "priceAscending", null)]
-        public virtual void ChooseCategoryFromThirdLevelCategoryTreeAndApplyFiltersOnTheCatalogPage(string domain, string sortBy, string[] exampleTags)
+        [NUnit.Framework.TestCaseAttribute("en", "priceAscending", null)]
+        public virtual void ChooseCategoryAndApplyFiltersOnTheCatalogPage(string domain, string sortBy, string[] exampleTags)
         {
             string[] @__tags = new string[] {
                     "thirdLevelCategoryTree"};
@@ -105,8 +94,7 @@ namespace MelonTestAutomation.FeatureFiles
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("domain", domain);
             argumentsOfScenario.Add("sortBy", sortBy);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Choose category from third level category tree and apply filters on the Catalog p" +
-                    "age", null, tagsOfScenario, argumentsOfScenario);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Choose category and apply filters on the Catalog page", null, tagsOfScenario, argumentsOfScenario);
 #line 8
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -131,42 +119,27 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Given(string.Format("I am on domain {0} Home page", domain), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 10
- testRunner.When("I press All categories dropdown menu", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I click All categories dropdown menu", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 11
- testRunner.Then("First level category tree is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.And("I open Home % Garden category", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 12
- testRunner.When("I choose DIY & Garden from the First level category tree", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 13
- testRunner.Then("Second level category tree is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-#line 14
- testRunner.When("I choose Do It Yourself (DIY) from the Second level category tree", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 15
- testRunner.Then("Third level category tree is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-#line 16
- testRunner.When("I press Do It Yourself (DIY) link from the Third level category tree", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 17
  testRunner.Then("Correct page is loaded", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 18
+#line 13
  testRunner.When(string.Format("I sort by {0}", sortBy), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 19
+#line 14
  testRunner.And("I apply Brand filter", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 20
+#line 15
  testRunner.Then("Brand filter is applyed correctly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 21
+#line 16
  testRunner.When("I apply Colour filter", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 22
+#line 17
  testRunner.Then("Colour filter is applyed correctly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
